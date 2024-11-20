@@ -54,3 +54,6 @@ local.properties
 .cache-main
 .scala_dependencies
 .worksheet
+
+# eliminiamo i file del macOS
+.DS_Store
