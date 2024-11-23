@@ -30,6 +30,7 @@ public class FadeIn {
 	 */
 	public FadeIn(Group g, int t){
 		group=g;
+		group.setOpacity(0);
 		time=t;
 		step=20*time/1000; //make 20 step for each seconds
 	}
@@ -42,9 +43,11 @@ public class FadeIn {
 	 */
 	public FadeIn(Group g, int t, int s){
 		group=g;
+		group.setOpacity(0);
 		time=t;
 		step=s*time/1000;
 	}
+	
 	public void start() {
 		int timelineTime=time/step;
 		//this control avoid the creation of more than one instance of the class "Timeline"
@@ -59,7 +62,7 @@ public class FadeIn {
 	private void action() {
 		opacity+=1.0/step;
 		if(opacity<1.05) {
-			System.out.println(opacity);
+//			System.out.println(opacity);
 			group.setOpacity(opacity);
 		}else{
 			opacity=0;
