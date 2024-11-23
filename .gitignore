@@ -57,3 +57,6 @@ local.properties
 
 # eliminiamo i file del macOS
 .DS_Store
+
+# ignora le cartella test
+test

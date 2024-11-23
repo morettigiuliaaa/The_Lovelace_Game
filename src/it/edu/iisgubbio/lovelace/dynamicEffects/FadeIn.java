@@ -1,7 +1,8 @@
 /*
  * per usare questa classe nel codice è sufficiente creare un'istanza di questa usando 
- * uno dei costruttori in base alle proprie esigenze.
- * per creare un'istanza basta scrivere: new FadeIn(nomeDelGruppo, tempoDiEsecuzione)
+ * uno dei costruttori in base alle proprie esigenze, e poi richiamare il metodo "start".
+ * Esempio:
+ * (new FadeIn(nomeDelGruppo, tempoDiEsecuzione)).start();
  */
 
 package it.edu.iisgubbio.lovelace.dynamicEffects;
@@ -58,7 +59,7 @@ public class FadeIn {
 	private void action() {
 		opacity+=1.0/step;
 		if(opacity<1.05) {
-//			System.out.println(opacity);
+			System.out.println(opacity);
 			group.setOpacity(opacity);
 		}else{
 			opacity=0;
