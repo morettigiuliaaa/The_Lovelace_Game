@@ -11,6 +11,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import it.edu.iisgubbio.lovelace.dynamicEffects.*;
 
@@ -40,7 +41,7 @@ public class Interfaccia extends Application{
 		
 		areaGioco.getChildren().add(home);
 		
-		(new FadeIn(home, 2000, 30)).start();
+		(new FadeIn(home, 1000, 30)).start();
 		
 		eTitolo.setLayoutX(340);
 		eTitolo.setLayoutY(100);
@@ -62,9 +63,10 @@ public class Interfaccia extends Application{
 		bEsci.setPrefWidth(200);
 		
 		bImpostazioni.setOnAction(e-> impostazioni());
+		bTornaAlMenu.setOnAction(e-> tornaHome());		
 		bEsci.setOnAction(e-> esci());
 		
-		Image icon = new Image(getClass().getResourceAsStream("immagini/IMG_2263.jpeg"));
+		Image icon = new Image(getClass().getResourceAsStream("IMG_2263.jpeg"));
 	    finestra.getIcons().add(icon);
 		
 		
@@ -82,14 +84,47 @@ public class Interfaccia extends Application{
 		finestra.show();
 	}
 	
+	public void tornaHome() {
+		areaGioco.getChildren().clear();
+		home.getChildren().clear();
+		home.getChildren().add(eTitolo);
+		home.getChildren().add(eSottoTitolo);
+		home.getChildren().add(bInizio);
+		home.getChildren().add(bImpostazioni);
+		home.getChildren().add(bEsci);
+		
+		areaGioco.getChildren().add(home);
+		
+		(new FadeIn(home, 1000, 30)).start();
+		
+		eTitolo.setLayoutX(340);
+		eTitolo.setLayoutY(100);
+		
+		eSottoTitolo.setLayoutX(342);
+		eSottoTitolo.setLayoutY(150);
+		
+		bInizio.setLayoutX(342);
+		bInizio.setLayoutY(250);
+		
+		bImpostazioni.setLayoutX(342);
+		bImpostazioni.setLayoutY(310);
+		
+		bEsci.setLayoutX(342);
+		bEsci.setLayoutY(373);
+		
+		bInizio.setPrefWidth(200);
+		bImpostazioni.setPrefWidth(200);
+		bEsci.setPrefWidth(200);
+	}
+	
 	public void impostazioni() {
 		Group effetto = new Group();
 		Label lingua = new Label("Lingua:");
-		lingua.setId("testo");
+		lingua.setId("titolo");
 		ToggleSwitch button = new ToggleSwitch();
 		effetto.getChildren().add(bTornaAlMenu);
 		effetto.getChildren().add(button);
-		(new FadeIn(effetto, 2000)).start();
+		(new FadeIn(effetto, 1000)).start();
 		areaGioco.getChildren().clear();
 		areaGioco.setId("paneSfondo");
 		areaGioco.getChildren().add(effetto);
