@@ -1,6 +1,9 @@
 # The_Lovelace_Game
 Repository dedicato al gioco su Ada Lovelace
 
+## Progetto eclipse
+il nome del JRE è "21-full" e corrisponde al JDK 21 full di Liberica
+
 ## Gruppi
 
 ### Codice
