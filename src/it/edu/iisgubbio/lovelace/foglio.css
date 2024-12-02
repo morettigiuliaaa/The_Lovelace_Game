@@ -1,0 +1,49 @@
+#paneSfondo {
+    -fx-background-image: url("immagini/sfondo_menu.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center;
+}
+
+.button {
+    -fx-background-color: rgb(153, 85, 255);
+    -fx-text-fill: white;         
+    -fx-font-size: 16px;          
+    -fx-padding: 10px 20px;       
+    -fx-border-radius: 10px;      
+    -fx-background-radius: 10px; 
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 15, 0.5, 0, 0);
+    -fx-cursor: hand;             
+    -fx-border-width: 0px;
+    -fx-font-weight: bold;        
+    -fx-alignment: center;
+}
+
+.button:hover {
+    -fx-background-color: #a374f5; 
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.8), 15, 0.7, 0, 0);
+}
+
+.button:pressed {
+    -fx-background-color: #8c5ce5; 
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 1.0), 20, 0.9, 0, 0);
+}
+
+#testo{
+	 -fx-text-fill: white;
+	 -fx-font-size: 16px; 
+	 -fx-border-radius: 10px;      
+     -fx-background-radius: 10px;
+}
+#switch{
+	-fx-background-color: rgb(153, 85, 255);
+}
+
+@font-face {
+	font-family: titolo;
+	src: url("Minecraft.ttf");
+}
+
+#titolo{
+	-fx-font-family:"titolo";
+}
