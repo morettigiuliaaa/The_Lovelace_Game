@@ -40,10 +40,11 @@
 }
 
 @font-face {
-	font-family: "titolo";
-	src: url("font.ttf");
+    font-family: 'font';
+    src: url('font.ttf');
 }
 
-#titolo{
-	-fx-font-family:"titolo";
+#titolo {
+    -fx-font-family: 'font';
+    -fx-font-size: 20px;
 }

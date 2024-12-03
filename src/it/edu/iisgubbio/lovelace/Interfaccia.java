@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -118,17 +119,23 @@ public class Interfaccia extends Application{
 	}
 	
 	public void impostazioni() {
+		Slider slideraudio = new Slider();
 		Group effetto = new Group();
 		Label lingua = new Label("Lingua:");
-		lingua.setId("titolo");
+		lingua.setId("titolo");	
+		Label audio = new Label("Audio:");
+		audio.setId("titolo");
 		ToggleSwitch button = new ToggleSwitch();
 		effetto.getChildren().add(bTornaAlMenu);
 		effetto.getChildren().add(button);
+		effetto.getChildren().add(slideraudio);
+		effetto.getChildren().add(lingua);
+		effetto.getChildren().add(audio);
+		slideraudio.setValue(100);
 		(new FadeIn(effetto, 1000)).start();
 		areaGioco.getChildren().clear();
 		areaGioco.setId("paneSfondo");
 		areaGioco.getChildren().add(effetto);
-		areaGioco.getChildren().add(lingua);
 		button.setLayoutX(381);
 		button.setLayoutY(373);
 		lingua.setLayoutX(390);
