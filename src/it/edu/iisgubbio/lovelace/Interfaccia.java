@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import it.edu.iisgubbio.lovelace.demo.FontSuFile;
 import it.edu.iisgubbio.lovelace.dynamicEffects.*;
 
 public class Interfaccia extends Application{
@@ -42,13 +43,16 @@ public class Interfaccia extends Application{
 		
 		areaGioco.getChildren().add(home);
 		
+		eTitolo.setId("titolo");
+		eSottoTitolo.setId("sottotitolo");
+		
 		(new FadeIn(home, 1000, 30)).start();
 		
-		eTitolo.setLayoutX(340);
+		eTitolo.setLayoutX(150);
 		eTitolo.setLayoutY(100);
 		
-		eSottoTitolo.setLayoutX(342);
-		eSottoTitolo.setLayoutY(150);
+		eSottoTitolo.setLayoutX(280);
+		eSottoTitolo.setLayoutY(190);
 		
 		bInizio.setLayoutX(342);
 		bInizio.setLayoutY(250);
@@ -63,6 +67,7 @@ public class Interfaccia extends Application{
 		bImpostazioni.setPrefWidth(200);
 		bEsci.setPrefWidth(200);
 		
+		bInizio.setOnAction(e->inizioGioco());
 		bImpostazioni.setOnAction(e-> impostazioni());
 		bTornaAlMenu.setOnAction(e-> tornaHome());		
 		bEsci.setOnAction(e-> esci());
@@ -85,6 +90,11 @@ public class Interfaccia extends Application{
 		finestra.show();
 	}
 	
+	public void inizioGioco() {
+		areaGioco.getChildren().clear();
+		
+	}
+	
 	public void tornaHome() {
 		areaGioco.getChildren().clear();
 		home.getChildren().clear();
@@ -98,11 +108,11 @@ public class Interfaccia extends Application{
 		
 		(new FadeIn(home, 1000, 30)).start();
 		
-		eTitolo.setLayoutX(340);
+		eTitolo.setLayoutX(150);
 		eTitolo.setLayoutY(100);
 		
-		eSottoTitolo.setLayoutX(342);
-		eSottoTitolo.setLayoutY(150);
+		eSottoTitolo.setLayoutX(280);
+		eSottoTitolo.setLayoutY(190);
 		
 		bInizio.setLayoutX(342);
 		bInizio.setLayoutY(250);
@@ -122,9 +132,9 @@ public class Interfaccia extends Application{
 		Slider slideraudio = new Slider();
 		Group effetto = new Group();
 		Label lingua = new Label("Lingua:");
-		lingua.setId("titolo");	
+		lingua.setId("tcss");
 		Label audio = new Label("Audio:");
-		audio.setId("titolo");
+		audio.setId("tcss");
 		ToggleSwitch button = new ToggleSwitch();
 		effetto.getChildren().add(bTornaAlMenu);
 		effetto.getChildren().add(button);
@@ -132,14 +142,21 @@ public class Interfaccia extends Application{
 		effetto.getChildren().add(lingua);
 		effetto.getChildren().add(audio);
 		slideraudio.setValue(100);
+		slideraudio.setId("slider");
+		audio.setId("impostazioni");
+		lingua.setId("impostazioni");
+		audio.setLayoutX(410);
+		audio.setLayoutY(100);
+		slideraudio.setLayoutX(375);
+		slideraudio.setLayoutY(150);
+		button.setLayoutX(381);
+		button.setLayoutY(250);
+		lingua.setLayoutX(395);
+		lingua.setLayoutY(200);
 		(new FadeIn(effetto, 1000)).start();
 		areaGioco.getChildren().clear();
 		areaGioco.setId("paneSfondo");
 		areaGioco.getChildren().add(effetto);
-		button.setLayoutX(381);
-		button.setLayoutY(373);
-		lingua.setLayoutX(390);
-		lingua.setLayoutY(355);
 		bTornaAlMenu.setLayoutX(10);
 		bTornaAlMenu.setLayoutY(7);
 		
