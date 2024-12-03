@@ -4,7 +4,13 @@
     -fx-background-size: cover;
     -fx-background-position: center;
 }
+#start{
+	-fx-background-color: black;
+}
 
+#dialogo{
+	-fx-background-image: url("casadialogo.png");
+}
 .button {
     -fx-background-color: rgb(132, 16, 153);
     -fx-text-fill: white;         
@@ -37,13 +43,31 @@
 }
 #switch{
 	-fx-background-color: rgb(153, 85, 255);
+	-fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 1.0), 20, 0.9, 0, 0);
 }
 
 @font-face {
-	font-family: "titolo";
-	src: url("font.ttf");
+    src: url('../font.ttf');
 }
 
-#titolo{
-	-fx-font-family:"titolo";
+#sottotitolo {
+	-fx-text-fill: white;
+	-fx-font-family: Minecraft;
+	-fx-font-size: 20
+}
+
+#titolo {
+	-fx-text-fill: white;
+	-fx-font-family: Minecraft;
+	-fx-font-size: 60
+}
+
+#slider{
+	-fx-color: rgb(132, 16, 153);
+}
+
+#impostazioni {
+	-fx-text-fill: white;
+	-fx-font-family: Minecraft;
+	-fx-font-size: 30
 }
