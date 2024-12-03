@@ -1,0 +1,10 @@
+@font-face {
+    src: url('../font.ttf');
+}
+
+#tcss {
+	-fx-text-fill: red;
+	/* attenzione che il nome lo legge dall'interno del file */
+	-fx-font-family: Minecraft;
+	-fx-font-size: 40
+}
