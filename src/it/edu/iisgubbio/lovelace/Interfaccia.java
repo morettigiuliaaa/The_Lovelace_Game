@@ -1,5 +1,6 @@
 package it.edu.iisgubbio.lovelace;
 
+import javafx.animation.Animation;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -35,7 +36,8 @@ public class Interfaccia extends Application {
     Group home = new Group();
 
     String filePath = "LovelaceGameInGame.wav";
-    AudioClip audioClip = new AudioClip(new File(filePath).toURI().toString());
+    Media music= new Media(new File(filePath).toURI().toString());
+    MediaPlayer audioClip= new MediaPlayer(music);
     Image adaImage = new Image(getClass().getResourceAsStream("ada_sx.png"));
     ImageView adaferma = new ImageView(adaImage); // Caricamento corretto dell'immagine
     
@@ -46,6 +48,7 @@ public class Interfaccia extends Application {
     final int ALTEZZA_AREA_GIOCO = 700;
 
     public void start(Stage finestra) throws Exception {
+        audioClip.setCycleCount(Animation.INDEFINITE);
         audioClip.play();
         
         home.getChildren().add(eTitolo);
@@ -157,7 +160,7 @@ public class Interfaccia extends Application {
     }
 
     public void impostazioni() {
-        Slider slideraudio = new Slider(0, 100, 100);
+        Slider slideraudio = new Slider(0, 1, 1);
         Group effetto = new Group();
         Label lingua = new Label("Lingua:");
         lingua.setId("tcss");
@@ -186,9 +189,10 @@ public class Interfaccia extends Application {
         areaGioco.getChildren().add(effetto);
         bTornaAlMenu.setLayoutX(10);
         bTornaAlMenu.setLayoutY(7);
-        slideraudio.setBlockIncrement(1);
+        slideraudio.setBlockIncrement(0.1);
         slideraudio.valueProperty().addListener((observable, oldValue, newValue) -> {
             audioClip.setVolume(newValue.doubleValue());
+            System.out.println(newValue);
         });
     }
 
