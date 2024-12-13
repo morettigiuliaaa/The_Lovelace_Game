@@ -160,3 +160,4 @@ public class Start{
 		areaGioco.getChildren().add(dialogo.getFinestra());
 	}
 }
+
