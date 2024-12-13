@@ -25,7 +25,7 @@ import java.io.File;
 import it.edu.iisgubbio.lovelace.demo.FontSuFile;
 import it.edu.iisgubbio.lovelace.dynamicEffects.*;
 
-public class Interfaccia extends Application {
+public class Menu extends Application {
     Pane areaGioco = new Pane();
     Label eTitolo = new Label("The Lovelace Game");
     Label eSottoTitolo = new Label("Aiuta Ada a costruire il suo algoritmo!");
