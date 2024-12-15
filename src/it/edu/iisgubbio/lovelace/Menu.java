@@ -17,6 +17,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -122,7 +124,22 @@ public class Menu extends Application {
         // Aggiungi l'immagine al "pane principale"
         areaGioco.getChildren().add(augusto);
         
-        // AUGUSTO E' DA RIMPICCIOLIRE
+        /*** PARTE DA IMPLEMENTARE PER CAMBIARE INTERFACCIA
+        
+        //eseguiamo una transizione
+        Rectangle rettangolo=new Rectangle(LARGHEZZA_AREA_GIOCO,ALTEZZA_AREA_GIOCO);
+        rettangolo.setFill(Color.BLACK);
+        Group gruppo=new Group(rettangolo);
+        areaGioco.getChildren().add(gruppo);
+        (new FadeIn(gruppo, 2000)).start();
+        
+        //affidiamo l'interfaccia ad un'altra classe
+        Start gioco = new Start(finestra, scena);
+         
+        // finestra e scena devono essere dati come parametri in input al metodo
+        // inizioGioco(Stage finestra, Scene scena)
+         
+        */
         
     }
 
