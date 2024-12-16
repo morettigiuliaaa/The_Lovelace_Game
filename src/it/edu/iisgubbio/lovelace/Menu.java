@@ -23,6 +23,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.Locale;
 
 import it.edu.iisgubbio.lovelace.demo.FontSuFile;
 import it.edu.iisgubbio.lovelace.dynamicEffects.*;
@@ -49,9 +50,16 @@ public class Menu extends Application {
     final int LARGHEZZA_AREA_GIOCO = 900;
     final int ALTEZZA_AREA_GIOCO = 700;
 
+    //deve essere globale per memorizzare il suo stato
+    ToggleSwitch button = new ToggleSwitch();
+    
+    RaccoltaTesti testoDialogo;
+    
     public void start(Stage finestra) throws Exception {
         audioClip.setCycleCount(Animation.INDEFINITE);
         audioClip.play();
+        
+        testoDialogo=new RaccoltaTesti(Locale.ITALIAN);
         
         home.getChildren().add(eTitolo);
         home.getChildren().add(eSottoTitolo);
@@ -183,7 +191,12 @@ public class Menu extends Application {
         lingua.setId("tcss");
         Label audio = new Label("Audio:");
         audio.setId("tcss");
-        ToggleSwitch button = new ToggleSwitch();
+        if(button.switchOnProperty().getValue()) {
+        	testoDialogo.setLocale(Locale.ENGLISH);
+        }else {
+        	testoDialogo.setLocale(Locale.ITALIAN);
+        }
+        System.out.println(testoDialogo.getString("salutoAlPadre"));
         effetto.getChildren().add(bTornaAlMenu);
         effetto.getChildren().add(button);
         effetto.getChildren().add(slideraudio);
