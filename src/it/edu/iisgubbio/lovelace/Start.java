@@ -1,5 +1,7 @@
 package it.edu.iisgubbio.lovelace;
 
+import it.edu.iisgubbio.lovelace.*;
+import it.edu.iisgubbio.lovelace.demo.*;
 import it.edu.iisgubbio.lovelace.dynamicEffects.FadeOut;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -76,6 +78,11 @@ public class Start{
         
         areaGioco.getChildren().add(gruppo);
         (new FadeOut(gruppo, 2000)).start();
+        
+        areaGioco.getChildren().add((new OggettoPannello( , adaImage)).getFinestra());
+      
+        
+        
         
         // AUGUSTO E' DA RIMPICCIOLIRE
         

@@ -85,7 +85,6 @@ public class Menu extends Application {
         bImpostazioni.setPrefWidth(200);
         bEsci.setPrefWidth(200);
         
-        bInizio.setOnAction(e -> inizioGioco());
         bImpostazioni.setOnAction(e -> impostazioni());
         bTornaAlMenu.setOnAction(e -> tornaHome());        
         bEsci.setOnAction(e -> esci());
@@ -97,6 +96,7 @@ public class Menu extends Application {
         areaGioco.setId("paneSfondo");
         
         Scene scena = new Scene(areaGioco, LARGHEZZA_AREA_GIOCO, ALTEZZA_AREA_GIOCO);
+        bInizio.setOnAction(e -> inizioGioco(finestra, scena));
         scena.getStylesheets().add("it/edu/iisgubbio/lovelace/foglio.css");
         
         finestra.setTitle("The Lovelace Game!");
@@ -105,27 +105,9 @@ public class Menu extends Application {
         finestra.show();
     }
 
-    public void inizioGioco() {
-        areaGioco.getChildren().clear();
+    public void inizioGioco(Stage finestra, Scene scena) {
+    	
         audioClip.stop();
-        areaGioco.setId("dialogo");
-
-        // Posiziona l'immagine sopra il "pane"
-        adaferma.setLayoutX(40);  // Imposta la posizione orizzontale
-        adaferma.setLayoutY(170); // Imposta la posizione verticale
-
-        // Aggiungi l'immagine al "pane principale"
-        areaGioco.getChildren().add(adaferma);
-        
-        // Posiziona l'immagine sopra il "pane"
-        augusto.setLayoutX(380);  // Imposta la posizione orizzontale
-        augusto.setLayoutY(170); // Imposta la posizione verticale
-
-        // Aggiungi l'immagine al "pane principale"
-        areaGioco.getChildren().add(augusto);
-        
-        /*** PARTE DA IMPLEMENTARE PER CAMBIARE INTERFACCIA
-        
         //eseguiamo una transizione
         Rectangle rettangolo=new Rectangle(LARGHEZZA_AREA_GIOCO,ALTEZZA_AREA_GIOCO);
         rettangolo.setFill(Color.BLACK);
@@ -139,8 +121,7 @@ public class Menu extends Application {
         // finestra e scena devono essere dati come parametri in input al metodo
         // inizioGioco(Stage finestra, Scene scena)
          
-        */
-        
+      
     }
 
     public void tornaHome() {
