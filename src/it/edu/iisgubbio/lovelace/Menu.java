@@ -1,6 +1,8 @@
 package it.edu.iisgubbio.lovelace;
 
 import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -21,6 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.util.Locale;
@@ -29,6 +32,8 @@ import it.edu.iisgubbio.lovelace.demo.FontSuFile;
 import it.edu.iisgubbio.lovelace.dynamicEffects.*;
 
 public class Menu extends Application {
+	Label lingua = new Label();
+	Label audio = new Label();
     Pane areaGioco = new Pane();
     Label eTitolo = new Label("The Lovelace Game");
     Label eSottoTitolo = new Label("Aiuta Ada a costruire il suo algoritmo!");
@@ -49,7 +54,7 @@ public class Menu extends Application {
     
     final int LARGHEZZA_AREA_GIOCO = 900;
     final int ALTEZZA_AREA_GIOCO = 700;
-
+    
     //deve essere globale per memorizzare il suo stato
     ToggleSwitch button = new ToggleSwitch();
     
@@ -58,8 +63,6 @@ public class Menu extends Application {
     public void start(Stage finestra) throws Exception {
         audioClip.setCycleCount(Animation.INDEFINITE);
         audioClip.play();
-        
-        testoDialogo=new RaccoltaTesti(Locale.ITALIAN);
         
         home.getChildren().add(eTitolo);
         home.getChildren().add(eSottoTitolo);
@@ -166,23 +169,13 @@ public class Menu extends Application {
     }
 
     public void impostazioni() {
-        Slider slideraudio = new Slider(0, 1, 1);
-        Group effetto = new Group();
-        Label lingua = new Label("Lingua:");
-        lingua.setId("tcss");
-        Label audio = new Label("Audio:");
-        audio.setId("tcss");
-        if(button.switchOnProperty().getValue()) {
-        	testoDialogo.setLocale(Locale.ENGLISH);
-        }else {
-        	testoDialogo.setLocale(Locale.ITALIAN);
-        }
-        System.out.println(testoDialogo.getString("salutoAlPadre"));
+    	Slider slideraudio = new Slider(0, 1, 1);
+    	Group effetto = new Group();
+    	lingua.setId("tcss");
+    	audio.setId("tcss");
         effetto.getChildren().add(bTornaAlMenu);
         effetto.getChildren().add(button);
         effetto.getChildren().add(slideraudio);
-        effetto.getChildren().add(lingua);
-        effetto.getChildren().add(audio);
         slideraudio.setId("slider");
         audio.setId("impostazioni");
         lingua.setId("impostazioni");
@@ -197,7 +190,24 @@ public class Menu extends Application {
         (new FadeIn(effetto, 1000)).start();
         areaGioco.getChildren().clear();
         areaGioco.setId("paneSfondo");
-        areaGioco.getChildren().add(effetto);
+        if(button.switchOnProperty().getValue()) {
+    		testoDialogo=new RaccoltaTesti(Locale.ENGLISH);
+        	testoDialogo.setLocale(Locale.ENGLISH);
+        	lingua.setText(testoDialogo.getString("lingua"));
+        	audio.setText(testoDialogo.getString("audio"));
+        	effetto.getChildren().add(lingua);
+            effetto.getChildren().add(audio);
+        	
+            
+        }else {
+        	testoDialogo=new RaccoltaTesti(Locale.ITALIAN);
+        	testoDialogo.setLocale(Locale.ITALIAN);
+        	lingua.setText(testoDialogo.getString("lingua"));
+        	audio.setText(testoDialogo.getString("audio"));
+        	effetto.getChildren().add(lingua);
+            effetto.getChildren().add(audio);
+            
+        }
         bTornaAlMenu.setLayoutX(10);
         bTornaAlMenu.setLayoutY(7);
         slideraudio.setBlockIncrement(0.1);
@@ -205,6 +215,7 @@ public class Menu extends Application {
             audioClip.setVolume(newValue.doubleValue());
             System.out.println(newValue);
         });
+        areaGioco.getChildren().add(effetto);
     }
 
     public void esci() {

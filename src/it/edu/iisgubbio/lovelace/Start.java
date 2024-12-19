@@ -1,5 +1,8 @@
 package it.edu.iisgubbio.lovelace;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import it.edu.iisgubbio.lovelace.*;
 import it.edu.iisgubbio.lovelace.demo.*;
 import it.edu.iisgubbio.lovelace.dynamicEffects.FadeOut;
@@ -17,6 +20,8 @@ import javafx.util.Duration;
 public class Start{
 	Scene scena;
 	
+	RaccoltaTesti testoDialogo;
+		
 	//Oggetti
     Image augustoImage = new Image(getClass().getResourceAsStream("augusto.png"));
     Image adaImage = new Image(getClass().getResourceAsStream("ada_sx.png"));
@@ -43,6 +48,7 @@ public class Start{
 	}
 	
 	private void cambioScena() {
+		testoDialogo= new RaccoltaTesti(Locale.ENGLISH);
 		int nElemnti=areaGioco.getChildren().size();
 		//prendo lultimo elemento aggiunto alla lista
 		Group gruppo=(Group)areaGioco.getChildren().get(nElemnti-1);
@@ -79,7 +85,9 @@ public class Start{
         areaGioco.getChildren().add(gruppo);
         (new FadeOut(gruppo, 2000)).start();
         
-        areaGioco.getChildren().add((new OggettoPannello( , adaImage)).getFinestra());
+        areaGioco.getChildren().add((new OggettoPannello( testoDialogo.getString("dialogo1adaen") , adaImage)).getFinestra());
+        
+        
       
         
         
