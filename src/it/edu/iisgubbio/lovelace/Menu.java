@@ -43,8 +43,8 @@ public class Menu extends Application {
     Button bTornaAlMenu = new Button("🏠");
     Group home = new Group();
 
-    String filePath = "LovelaceGameInGame.wav";
-    Media music= new Media(new File(filePath).toURI().toString());
+    String filePathHOME = "LovelaceGameInGame.wav";
+    Media music= new Media(new File(filePathHOME).toURI().toString());
     MediaPlayer audioClip= new MediaPlayer(music);
     Image adaImage = new Image(getClass().getResourceAsStream("ada_sx.png"));
     ImageView adaferma = new ImageView(adaImage); // Caricamento corretto dell'immagine
@@ -75,8 +75,6 @@ public class Menu extends Application {
 
         eTitolo.setId("titolo");
         eSottoTitolo.setId("sottotitolo");
-
-        (new FadeIn(home, 1000, 30)).start();
 
         eTitolo.setLayoutX(150);
         eTitolo.setLayoutY(100);
@@ -115,25 +113,6 @@ public class Menu extends Application {
         finestra.setResizable(false);
         finestra.setScene(scena);
         finestra.show();
-    }
-
-    public void inizioGioco(Stage finestra, Scene scena) {
-
-        audioClip.stop();
-        //eseguiamo una transizione
-        Rectangle rettangolo=new Rectangle(LARGHEZZA_AREA_GIOCO,ALTEZZA_AREA_GIOCO);
-        rettangolo.setFill(Color.BLACK);
-        Group gruppo=new Group(rettangolo);
-        areaGioco.getChildren().add(gruppo);
-        (new FadeIn(gruppo, 2000)).start();
-
-        //affidiamo l'interfaccia ad un'altra classe
-        Start gioco = new Start(finestra, scena);
-
-        // finestra e scena devono essere dati come parametri in input al metodo
-        // inizioGioco(Stage finestra, Scene scena)
-
-
     }
 
     public void tornaHome() {
@@ -180,7 +159,7 @@ public class Menu extends Application {
         slideraudio.setId("slider");
         audio.setId("impostazioni");
         lingua.setId("impostazioni");
-        audio.setLayoutX(410);
+        audio.setLayoutX(405);
         audio.setLayoutY(100);
         slideraudio.setLayoutX(375);
         slideraudio.setLayoutY(150);
@@ -196,6 +175,12 @@ public class Menu extends Application {
         	testoDialogo.setLocale(Locale.ENGLISH);
         	lingua.setText(testoDialogo.getString("lingua"));
         	audio.setText(testoDialogo.getString("audio"));
+        	audio.setLayoutX(405);
+            audio.setLayoutY(100);
+            lingua.setLayoutX(370);
+            lingua.setLayoutY(200);
+            eSottoTitolo.setLayoutX(500); 
+        	eSottoTitolo.setLayoutY(190);
         	effetto.getChildren().add(lingua);
             effetto.getChildren().add(audio);
         }else {
@@ -226,9 +211,29 @@ public class Menu extends Application {
     }
 
     void aggiornaLinguaSuInterfaccia(){
+    	eSottoTitolo.setText(testoDialogo.getString("sottotitolo"));
         bInizio.setText(testoDialogo.getString("inizio"));
         bImpostazioni.setText(testoDialogo.getString("impostazioni"));
         bEsci.setText(testoDialogo.getString("esci"));
+    }
+    
+    public void inizioGioco(Stage finestra, Scene scena) {
+
+        audioClip.stop();
+        //eseguiamo una transizione
+        Rectangle rettangolo=new Rectangle(LARGHEZZA_AREA_GIOCO,ALTEZZA_AREA_GIOCO);
+        rettangolo.setFill(Color.BLACK);
+        Group gruppo=new Group(rettangolo);
+        areaGioco.getChildren().add(gruppo);
+        (new FadeIn(gruppo, 2000)).start();
+
+        //affidiamo l'interfaccia ad un'altra classe
+        Start gioco = new Start(finestra, scena);
+
+        // finestra e scena devono essere dati come parametri in input al metodo
+        // inizioGioco(Stage finestra, Scene scena)
+
+
     }
 
     public void esci() {
