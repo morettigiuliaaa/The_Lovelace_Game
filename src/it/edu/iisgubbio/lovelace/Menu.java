@@ -48,68 +48,69 @@ public class Menu extends Application {
     MediaPlayer audioClip= new MediaPlayer(music);
     Image adaImage = new Image(getClass().getResourceAsStream("ada_sx.png"));
     ImageView adaferma = new ImageView(adaImage); // Caricamento corretto dell'immagine
-    
+
     Image augustoImage = new Image(getClass().getResourceAsStream("augusto.png"));
     ImageView augusto = new ImageView(augustoImage); // Caricamento corretto dell'immagine
-    
+
     final int LARGHEZZA_AREA_GIOCO = 900;
     final int ALTEZZA_AREA_GIOCO = 700;
-    
+
     //deve essere globale per memorizzare il suo stato
     ToggleSwitch button = new ToggleSwitch();
-    
+
     RaccoltaTesti testoDialogo;
-    
+
+    @Override
     public void start(Stage finestra) throws Exception {
         audioClip.setCycleCount(Animation.INDEFINITE);
         audioClip.play();
-        
+
         home.getChildren().add(eTitolo);
         home.getChildren().add(eSottoTitolo);
         home.getChildren().add(bInizio);
         home.getChildren().add(bImpostazioni);
         home.getChildren().add(bEsci);
-        
+
         areaGioco.getChildren().add(home);
-        
+
         eTitolo.setId("titolo");
         eSottoTitolo.setId("sottotitolo");
-        
+
         (new FadeIn(home, 1000, 30)).start();
-        
+
         eTitolo.setLayoutX(150);
         eTitolo.setLayoutY(100);
-        
+
         eSottoTitolo.setLayoutX(280);
         eSottoTitolo.setLayoutY(190);
-        
+
         bInizio.setLayoutX(342);
         bInizio.setLayoutY(250);
-        
+
         bImpostazioni.setLayoutX(342);
         bImpostazioni.setLayoutY(310);
-        
+
         bEsci.setLayoutX(342);
         bEsci.setLayoutY(373);
-        
+
         bInizio.setPrefWidth(200);
         bImpostazioni.setPrefWidth(200);
         bEsci.setPrefWidth(200);
-        
+
         bImpostazioni.setOnAction(e -> impostazioni());
-        bTornaAlMenu.setOnAction(e -> tornaHome());        
+        bTornaAlMenu.setOnAction(e -> tornaHome());
         bEsci.setOnAction(e -> esci());
-        
+
         Image icon = new Image(getClass().getResourceAsStream("IMG_2263.jpeg"));
         finestra.getIcons().add(icon);
-        
+
         eTitolo.setId("titolo");
         areaGioco.setId("paneSfondo");
-        
+
         Scene scena = new Scene(areaGioco, LARGHEZZA_AREA_GIOCO, ALTEZZA_AREA_GIOCO);
         bInizio.setOnAction(e -> inizioGioco(finestra, scena));
         scena.getStylesheets().add("it/edu/iisgubbio/lovelace/foglio.css");
-        
+
         finestra.setTitle("The Lovelace Game!");
         finestra.setResizable(false);
         finestra.setScene(scena);
@@ -117,7 +118,7 @@ public class Menu extends Application {
     }
 
     public void inizioGioco(Stage finestra, Scene scena) {
-    	
+
         audioClip.stop();
         //eseguiamo una transizione
         Rectangle rettangolo=new Rectangle(LARGHEZZA_AREA_GIOCO,ALTEZZA_AREA_GIOCO);
@@ -125,14 +126,14 @@ public class Menu extends Application {
         Group gruppo=new Group(rettangolo);
         areaGioco.getChildren().add(gruppo);
         (new FadeIn(gruppo, 2000)).start();
-        
+
         //affidiamo l'interfaccia ad un'altra classe
         Start gioco = new Start(finestra, scena);
-         
+
         // finestra e scena devono essere dati come parametri in input al metodo
         // inizioGioco(Stage finestra, Scene scena)
-         
-      
+
+
     }
 
     public void tornaHome() {
@@ -143,26 +144,26 @@ public class Menu extends Application {
         home.getChildren().add(bInizio);
         home.getChildren().add(bImpostazioni);
         home.getChildren().add(bEsci);
-        
+
         areaGioco.getChildren().add(home);
-        
+
         (new FadeIn(home, 1000, 30)).start();
-        
+
         eTitolo.setLayoutX(150);
         eTitolo.setLayoutY(100);
-        
+
         eSottoTitolo.setLayoutX(280);
         eSottoTitolo.setLayoutY(190);
-        
+
         bInizio.setLayoutX(342);
         bInizio.setLayoutY(250);
-        
+
         bImpostazioni.setLayoutX(342);
         bImpostazioni.setLayoutY(310);
-        
+
         bEsci.setLayoutX(342);
         bEsci.setLayoutY(373);
-        
+
         bInizio.setPrefWidth(200);
         bImpostazioni.setPrefWidth(200);
         bEsci.setPrefWidth(200);
@@ -197,8 +198,6 @@ public class Menu extends Application {
         	audio.setText(testoDialogo.getString("audio"));
         	effetto.getChildren().add(lingua);
             effetto.getChildren().add(audio);
-        	
-            
         }else {
         	testoDialogo=new RaccoltaTesti(Locale.ITALIAN);
         	testoDialogo.setLocale(Locale.ITALIAN);
@@ -206,7 +205,6 @@ public class Menu extends Application {
         	audio.setText(testoDialogo.getString("audio"));
         	effetto.getChildren().add(lingua);
             effetto.getChildren().add(audio);
-            
         }
         bTornaAlMenu.setLayoutX(10);
         bTornaAlMenu.setLayoutY(7);
@@ -215,7 +213,22 @@ public class Menu extends Application {
             audioClip.setVolume(newValue.doubleValue());
             System.out.println(newValue);
         });
+        button.switchOnProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("cambiato in "+newValue);
+            if(newValue) {
+                testoDialogo=new RaccoltaTesti(Locale.ENGLISH);
+            }else {
+                testoDialogo=new RaccoltaTesti(Locale.ITALIAN);
+            }
+            aggiornaLinguaSuInterfaccia();
+        });
         areaGioco.getChildren().add(effetto);
+    }
+
+    void aggiornaLinguaSuInterfaccia(){
+        bInizio.setText(testoDialogo.getString("inizio"));
+        bImpostazioni.setText(testoDialogo.getString("impostazioni"));
+        bEsci.setText(testoDialogo.getString("esci"));
     }
 
     public void esci() {
