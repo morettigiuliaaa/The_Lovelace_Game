@@ -8,25 +8,28 @@ import it.edu.iisgubbio.lovelace.demo.*;
 import it.edu.iisgubbio.lovelace.dynamicEffects.FadeOut;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+@SuppressWarnings("unused")
 public class Start{
+	
+	PauseTransition pause = new PauseTransition(Duration.seconds(50));
 	Scene scena;
 	
 	RaccoltaTesti testoDialogo;
 	
-	String filePathINIZIO = "suonoIniziale.wav";
-	Media music= new Media(new File(filePathINIZIO).toURI().toString());
-	MediaPlayer audioClip= new MediaPlayer(music);
+	AudioClip suonoIniziale = new AudioClip(getClass().getResource("suonoIniziale.wav").toString());
+	AudioClip voceAda = new AudioClip(getClass().getResource("voceAda.mp3").toString());
+
 	
 	//Oggetti
     Image augustoImage = new Image(getClass().getResourceAsStream("augusto.png"));
@@ -36,9 +39,13 @@ public class Start{
     Pane areaGioco = new Pane();
     ImageView augusto = new ImageView(augustoImage); // Caricamento corretto dell'immagine
     ImageView adaferma = new ImageView(adaImage); // Caricamento corretto dell'immagine
-    
+  
 	Timeline timelineGioco;
-	public Start(Stage finestra, Scene scenaPrimaria) {
+	public Start(Stage finestra, Scene scenaPrimaria, RaccoltaTesti testoDialogo) {
+		this.testoDialogo=testoDialogo;
+		System.out.println(testoDialogo+"="+this.testoDialogo);
+		suonoIniziale.play();
+		suonoIniziale.setVolume(0.5);
 		testoDialogo=new RaccoltaTesti(Locale.ITALIAN);
 		scena=scenaPrimaria;
 		areaGioco=(Pane)scena.getRoot();
@@ -70,7 +77,6 @@ public class Start{
 	}
 	
 	public void start(Group gruppo) {
-		audioClip.play();
         areaGioco.getChildren().clear();
         
         areaGioco.setId("dialogo");
@@ -92,13 +98,13 @@ public class Start{
         areaGioco.getChildren().add(gruppo);
         (new FadeOut(gruppo, 2000)).start();
         
+        voceAda.play();
         areaGioco.getChildren().add((new OggettoPannello( testoDialogo.getString("dialogo1ada") , adaImage)).getFinestra());
         
         
-      
         
-        
-        
+//        areaGioco.getChildren().add((new OggettoPannello( testoDialogo.getString("dialogo1augusto") , augustoImage)).getFinestra());
+       
         // AUGUSTO E' DA RIMPICCIOLIRE
         
     }
