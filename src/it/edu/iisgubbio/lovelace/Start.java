@@ -32,6 +32,7 @@ public class Start{
 	
 	AudioClip suonoIniziale = new AudioClip(getClass().getResource("suonoIniziale.wav").toString());
 	AudioClip voceAda = new AudioClip(getClass().getResource("voceAda.mp3").toString());
+	AudioClip voceAugusto = new AudioClip(getClass().getResource("voceAugusto.mp3").toString());
 
 	
 	//Oggetti
@@ -70,14 +71,16 @@ public class Start{
 			//aggiorniamo il tempo fino a quando non si interrompe l'animazione
 			tempoCambioDialogo=System.currentTimeMillis();
 		}
-		if(System.currentTimeMillis()-tempoCambioDialogo>1000 && dialogo.statoDiscorso()) {
+		if(System.currentTimeMillis()-tempoCambioDialogo>1990 && dialogo.statoDiscorso()) {
 			System.out.println("cambio dialogo");
+			voceAugusto.play();
 			dialogo=new OggettoPannello( testoDialogo.getString("dialogo1augusto") , augustoImage);
 			cambiaDialogo();
 		}
 		
 		
 	}
+	
 	
 	private void cambioScena() {
 		int nElemnti=areaGioco.getChildren().size();
@@ -142,5 +145,6 @@ public class Start{
 		//rimuoviamo lultimo node
 		areaGioco.getChildren().remove(i);
 		areaGioco.getChildren().add(dialogo.getFinestra());
+
 	}
 }
