@@ -17,4 +17,11 @@ public class RaccoltaTesti {
 	public void setLocale(Locale lingua) {
 		this.prendiFrasi = ResourceBundle.getBundle("it.edu.iisgubbio.lovelace.testi", lingua);
 	}
+
+	@Override
+	public String toString() {
+		return "in "+ prendiFrasi.getLocale();
+	}
+	
+	
 }

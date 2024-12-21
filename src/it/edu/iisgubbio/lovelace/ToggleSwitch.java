@@ -50,7 +50,7 @@ public class ToggleSwitch extends HBox {
 		init();
 		switchedOn.addListener((a,b,c) -> {
 			if (c) {
-                		label.setText("INGLESE");
+                		label.setText("ENGLISH");
                 		label.setId("sottotitolo");
                 		setStyle("-fx-background-color:  rgb(132, 16, 153);; -fx-background-radius: 10;");
                 		label.toFront();
