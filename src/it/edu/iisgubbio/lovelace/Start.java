@@ -43,7 +43,6 @@ public class Start{
 	Timeline timelineGioco;
 	public Start(Stage finestra, Scene scenaPrimaria, RaccoltaTesti testoDialogo) {
 		this.testoDialogo=testoDialogo;
-		System.out.println(testoDialogo+"="+this.testoDialogo);
 		suonoIniziale.play();
 		suonoIniziale.setVolume(0.5);
 		testoDialogo=new RaccoltaTesti(Locale.ITALIAN);

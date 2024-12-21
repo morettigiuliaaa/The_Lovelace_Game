@@ -57,6 +57,9 @@ public class Menu extends Application {
 
     @Override
     public void start(Stage finestra) throws Exception {
+    	//impostiamo la lingua del testo in italiano
+        testoDialogo = new RaccoltaTesti(Locale.ITALIAN);
+    	
         // Riproduzione della musica di sottofondo
         audioClip.setCycleCount(Animation.INDEFINITE);
         audioClip.play();
@@ -181,8 +184,6 @@ public class Menu extends Application {
 
         // Verifica della lingua selezionata tramite il ToggleSwitch
         if (button.switchOnProperty().getValue()) {
-            testoDialogo = new RaccoltaTesti(Locale.ENGLISH);
-            testoDialogo.setLocale(Locale.ENGLISH);
             lingua.setText(testoDialogo.getString("lingua"));
             audio.setText(testoDialogo.getString("audio"));
             audio.setLayoutX(405);
@@ -193,8 +194,6 @@ public class Menu extends Application {
             eSottoTitolo.setLayoutY(190);
        
         } else {
-            testoDialogo = new RaccoltaTesti(Locale.ITALIAN);
-            testoDialogo.setLocale(Locale.ITALIAN);
             lingua.setText(testoDialogo.getString("lingua"));
             audio.setText(testoDialogo.getString("audio"));
         }
