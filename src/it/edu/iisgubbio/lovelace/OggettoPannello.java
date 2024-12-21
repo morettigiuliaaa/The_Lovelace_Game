@@ -1,11 +1,13 @@
 package it.edu.iisgubbio.lovelace;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -13,11 +15,44 @@ import javafx.util.Duration;
 public class OggettoPannello {
     Group finestra = new Group();
     
+    Image augustoImage = new Image(getClass().getResourceAsStream("augusto.png"));
+    Image adaImage = new Image(getClass().getResourceAsStream("ada_sx.png"));
+    
+	AudioClip voceAda = new AudioClip(getClass().getResource("voceAda.mp3").toString());
+	AudioClip voceAugusto = new AudioClip(getClass().getResource("voceAugusto.mp3").toString());
+    
+	int indexDialoghi=0;
+	
+    //testi
+    private DialogoImmagine[] dialogoImage={
+    		new DialogoImmagine("dialogo1ada", adaImage),
+    		new DialogoImmagine("dialogo1augusto", augustoImage),
+    		new DialogoImmagine("dialogo2ada", adaImage),
+    		new DialogoImmagine("dialogo2augusto", augustoImage),
+    };
+    
     private boolean stato; //indica se l'animazione del testo è finita o no
     
+    static RaccoltaTesti testoDialogo;
     
-
-	public OggettoPannello(String testo, Image personaggio) {
+    static public void setTestoDialogo(RaccoltaTesti testo) {
+    	testoDialogo=testo;
+    }
+    
+    /**
+     * costruttore che attraverso il numero dato in ingresso prende il testo e l'immagine del vettore dialogoImage
+     * @param i è l'indice del vettore che contiene il testo interessato
+     */
+	public OggettoPannello(int i){
+		voceAda.setVolume(Menu.volume);
+		voceAugusto.setVolume(Menu.volume);
+		voceAda.setCycleCount(Animation.INDEFINITE);
+		voceAugusto.setCycleCount(Animation.INDEFINITE);
+		indexDialoghi=i;
+		oggettoPannello(testoDialogo.getString(dialogoImage[i].nomeDialogo), dialogoImage[i].immaginePersonaggio);
+	}
+	
+	public void oggettoPannello(String testo, Image personaggio) {
         // Crea la finestra con lo sfondo
         Rectangle sfondo = new Rectangle(900, 300);
         sfondo.setFill(Color.rgb(0 , 0 , 0 , 0.7)); // Sfondo semitrasparente
@@ -48,13 +83,18 @@ public class OggettoPannello {
         // Chiamare la funzione per l'effetto di scrittura
         showTypingEffect(dialogo, testo);
     }
+	
 
-    // Funzione per gestire l'effetto di scrittura
+	// Funzione per gestire l'effetto di scrittura
     private void showTypingEffect(TextArea dialogo, String testoDialogo) {
         Timeline timeline = new Timeline();
         final StringBuilder textBuilder = new StringBuilder();
         final int[] index = {0};  // Indice per tenere traccia della posizione nel testo
-
+        if(dialogoImage[indexDialoghi].personaggio.equals("Ada")) {
+        	voceAda.play();
+        }else if(dialogoImage[indexDialoghi].personaggio.equals("Augusto")){
+        	voceAugusto.play();
+        }
         // Crea una KeyFrame per aggiungere un carattere ogni 100 millisecondi
         KeyFrame keyFrame = new KeyFrame(Duration.millis(50), event -> {
             if (index[0] < testoDialogo.length()) {
@@ -64,6 +104,8 @@ public class OggettoPannello {
                 stato=false;
             }else {
             	stato=true;
+            	voceAugusto.stop();
+            	voceAda.stop();
             }
         });
 

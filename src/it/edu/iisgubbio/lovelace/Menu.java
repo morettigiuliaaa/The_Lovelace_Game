@@ -55,6 +55,8 @@ public class Menu extends Application {
 
     RaccoltaTesti testoDialogo;
 
+    static double volume=1.0;
+    
     @Override
     public void start(Stage finestra) throws Exception {
     	//impostiamo la lingua del testo in italiano
@@ -206,8 +208,8 @@ public class Menu extends Application {
         // Gestione del volume tramite slider
         slideraudio.setBlockIncrement(0.1);
         slideraudio.valueProperty().addListener((observable, oldValue, newValue) -> {
-            audioClip.setVolume(newValue.doubleValue());
-            System.out.println(newValue);
+            volume=newValue.doubleValue();
+        	audioClip.setVolume(volume);
         });
 
         // Gestione del cambiamento della lingua

@@ -1,15 +1,8 @@
 package it.edu.iisgubbio.lovelace;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import it.edu.iisgubbio.lovelace.*;
-import it.edu.iisgubbio.lovelace.demo.*;
 import it.edu.iisgubbio.lovelace.dynamicEffects.FadeOut;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
@@ -22,17 +15,12 @@ import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-@SuppressWarnings("unused")
 public class Start{
-	
-	PauseTransition pause = new PauseTransition(Duration.seconds(50));
 	Scene scena;
 	
 	RaccoltaTesti testoDialogo;
 	
 	AudioClip suonoIniziale = new AudioClip(getClass().getResource("suonoIniziale.wav").toString());
-	AudioClip voceAda = new AudioClip(getClass().getResource("voceAda.mp3").toString());
-
 	
 	//Oggetti
     Image augustoImage = new Image(getClass().getResourceAsStream("augusto.png"));
@@ -42,16 +30,20 @@ public class Start{
     Pane areaGioco = new Pane();
     ImageView augusto = new ImageView(augustoImage); // Caricamento corretto dell'immagine
     ImageView adaferma = new ImageView(adaImage); // Caricamento corretto dell'immagine
-  
+    
 	Timeline timelineGioco;
 	
 	OggettoPannello dialogo;
 	
+	long tempoCambioDialogo=0;
+	int nDialogo=0;
+	
 	public Start(Stage finestra, Scene scenaPrimaria, RaccoltaTesti testoDialogo) {
 		this.testoDialogo=testoDialogo;
+		//andiamo a settare la lingua in OggettoPannello
+		OggettoPannello.setTestoDialogo(testoDialogo);
+		suonoIniziale.setVolume(Menu.volume);
 		suonoIniziale.play();
-		suonoIniziale.setVolume(0.5);
-		testoDialogo=new RaccoltaTesti(Locale.ITALIAN);
 		scena=scenaPrimaria;
 		areaGioco=(Pane)scena.getRoot();
 		finestra.setScene(scena);
@@ -62,7 +54,6 @@ public class Start{
 		timelineGioco.play();
 	}
 	
-	long tempoCambioDialogo=0;
 	private void loop() {
 		if(dialogo.statoDiscorso()) {
 			System.out.println("dialogo concluso");
@@ -71,12 +62,17 @@ public class Start{
 			tempoCambioDialogo=System.currentTimeMillis();
 		}
 		if(System.currentTimeMillis()-tempoCambioDialogo>1000 && dialogo.statoDiscorso()) {
-			System.out.println("cambio dialogo");
-			dialogo=new OggettoPannello( testoDialogo.getString("dialogo1augusto") , augustoImage);
-			cambiaDialogo();
+			nDialogo++;
+			try{
+				dialogo=new OggettoPannello(nDialogo);
+				System.out.println("cambio dialogo");
+				cambiaDialogo();
+			}catch (ArrayIndexOutOfBoundsException e) {
+				//Dialoghi terminati
+				System.out.println("Dialoghi terminati");
+				timelineGioco.stop();
+			}
 		}
-		
-		
 	}
 	
 	private void cambioScena() {
@@ -116,12 +112,9 @@ public class Start{
         areaGioco.getChildren().add(gruppo);
         (new FadeOut(gruppo, 2000)).start();
         
-        voceAda.play();
-		dialogo=new OggettoPannello( testoDialogo.getString("dialogo1ada") , adaImage);
+		dialogo=new OggettoPannello(nDialogo);
 		areaGioco.getChildren().add(dialogo.getFinestra());
-        
-//      areaGioco.getChildren().add((new OggettoPannello( testoDialogo.getString("dialogo1augusto") , augustoImage)).getFinestra());
-       
+		
 //      TODO: AUGUSTO E' DA RIMPICCIOLIRE
         
         
@@ -133,12 +126,10 @@ public class Start{
 		try {
 			while(elementiSchermata.get(i)!=null) {
 				i++;
-				System.out.print(i);
 			}
 		} catch (IndexOutOfBoundsException e) {
 			i=i-1;
 		}
-		
 		//rimuoviamo lultimo node
 		areaGioco.getChildren().remove(i);
 		areaGioco.getChildren().add(dialogo.getFinestra());
