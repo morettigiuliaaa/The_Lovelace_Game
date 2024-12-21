@@ -21,6 +21,12 @@ public class Start{
 	RaccoltaTesti testoDialogo;
 	
 	AudioClip suonoIniziale = new AudioClip(getClass().getResource("suonoIniziale.wav").toString());
+<<<<<<< HEAD
+=======
+	AudioClip voceAda = new AudioClip(getClass().getResource("voceAda.mp3").toString());
+	AudioClip voceAugusto = new AudioClip(getClass().getResource("voceAugusto.mp3").toString());
+
+>>>>>>> 8b1fc9a479bba28dfb87523356e2fce7d30bd14d
 	
 	//Oggetti
     Image augustoImage = new Image(getClass().getResourceAsStream("augusto.png"));
@@ -61,6 +67,7 @@ public class Start{
 			//aggiorniamo il tempo fino a quando non si interrompe l'animazione
 			tempoCambioDialogo=System.currentTimeMillis();
 		}
+<<<<<<< HEAD
 		if(System.currentTimeMillis()-tempoCambioDialogo>1000 && dialogo.statoDiscorso()) {
 			nDialogo++;
 			try{
@@ -72,8 +79,16 @@ public class Start{
 				System.out.println("Dialoghi terminati");
 				timelineGioco.stop();
 			}
+=======
+		if(System.currentTimeMillis()-tempoCambioDialogo>1990 && dialogo.statoDiscorso()) {
+			System.out.println("cambio dialogo");
+			voceAugusto.play();
+			dialogo=new OggettoPannello( testoDialogo.getString("dialogo1augusto") , augustoImage);
+			cambiaDialogo();
+>>>>>>> 8b1fc9a479bba28dfb87523356e2fce7d30bd14d
 		}
 	}
+	
 	
 	private void cambioScena() {
 		int nElemnti=areaGioco.getChildren().size();
@@ -133,5 +148,6 @@ public class Start{
 		//rimuoviamo lultimo node
 		areaGioco.getChildren().remove(i);
 		areaGioco.getChildren().add(dialogo.getFinestra());
+
 	}
 }
