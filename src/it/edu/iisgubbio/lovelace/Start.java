@@ -1,6 +1,7 @@
 package it.edu.iisgubbio.lovelace;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import it.edu.iisgubbio.lovelace.*;
@@ -10,7 +11,9 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -41,6 +44,9 @@ public class Start{
     ImageView adaferma = new ImageView(adaImage); // Caricamento corretto dell'immagine
   
 	Timeline timelineGioco;
+	
+	OggettoPannello dialogo;
+	
 	public Start(Stage finestra, Scene scenaPrimaria, RaccoltaTesti testoDialogo) {
 		this.testoDialogo=testoDialogo;
 		suonoIniziale.play();
@@ -56,7 +62,20 @@ public class Start{
 		timelineGioco.play();
 	}
 	
+	long tempoCambioDialogo=0;
 	private void loop() {
+		if(dialogo.statoDiscorso()) {
+			System.out.println("dialogo concluso");
+		}else {
+			//aggiorniamo il tempo fino a quando non si interrompe l'animazione
+			tempoCambioDialogo=System.currentTimeMillis();
+		}
+		if(System.currentTimeMillis()-tempoCambioDialogo>1000 && dialogo.statoDiscorso()) {
+			System.out.println("cambio dialogo");
+			dialogo=new OggettoPannello( testoDialogo.getString("dialogo1augusto") , augustoImage);
+			cambiaDialogo();
+		}
+		
 		
 	}
 	
@@ -98,13 +117,30 @@ public class Start{
         (new FadeOut(gruppo, 2000)).start();
         
         voceAda.play();
-        areaGioco.getChildren().add((new OggettoPannello( testoDialogo.getString("dialogo1ada") , adaImage)).getFinestra());
+		dialogo=new OggettoPannello( testoDialogo.getString("dialogo1ada") , adaImage);
+		areaGioco.getChildren().add(dialogo.getFinestra());
         
-        
-        
-//        areaGioco.getChildren().add((new OggettoPannello( testoDialogo.getString("dialogo1augusto") , augustoImage)).getFinestra());
+//      areaGioco.getChildren().add((new OggettoPannello( testoDialogo.getString("dialogo1augusto") , augustoImage)).getFinestra());
        
-        // AUGUSTO E' DA RIMPICCIOLIRE
+//      TODO: AUGUSTO E' DA RIMPICCIOLIRE
+        
         
     }
+	
+	private void cambiaDialogo() {
+		ObservableList<Node> elementiSchermata= areaGioco.getChildren();
+		int i=0;
+		try {
+			while(elementiSchermata.get(i)!=null) {
+				i++;
+				System.out.print(i);
+			}
+		} catch (IndexOutOfBoundsException e) {
+			i=i-1;
+		}
+		
+		//rimuoviamo lultimo node
+		areaGioco.getChildren().remove(i);
+		areaGioco.getChildren().add(dialogo.getFinestra());
+	}
 }

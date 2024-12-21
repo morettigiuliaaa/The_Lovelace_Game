@@ -161,20 +161,24 @@ public class Menu extends Application {
         Group effetto = new Group();
         lingua.setId("tcss");
         audio.setId("tcss");
-
+        //settiamo tutti gli elementi con la stessa larghezza del ToggleSwitch
+        slideraudio.setMinWidth(220);
+        audio.setMinWidth(220);
+        lingua.setMinWidth(220);
+        
         effetto.getChildren().add(bTornaAlMenu);
         effetto.getChildren().add(button);
         effetto.getChildren().add(slideraudio);
         slideraudio.setId("slider");
         audio.setId("impostazioni");
         lingua.setId("impostazioni");
-        audio.setLayoutX(405);
+        audio.setLayoutX(331);
         audio.setLayoutY(100);
-        slideraudio.setLayoutX(375);
+        slideraudio.setLayoutX(331);
         slideraudio.setLayoutY(150);
         button.setLayoutX(331);
         button.setLayoutY(250);
-        lingua.setLayoutX(395);
+        lingua.setLayoutX(331);
         lingua.setLayoutY(200);
         
         // Effetto di transizione per le impostazioni
@@ -184,19 +188,14 @@ public class Menu extends Application {
 
         // Verifica della lingua selezionata tramite il ToggleSwitch
         if (button.switchOnProperty().getValue()) {
-            lingua.setText(testoDialogo.getString("lingua"));
-            audio.setText(testoDialogo.getString("audio"));
-            audio.setLayoutX(405);
-            audio.setLayoutY(100);
-            lingua.setLayoutX(370);
-            lingua.setLayoutY(200);
+            testoDialogo.setLocale(Locale.ENGLISH);
             eSottoTitolo.setLayoutX(500); 
             eSottoTitolo.setLayoutY(190);
-       
         } else {
-            lingua.setText(testoDialogo.getString("lingua"));
-            audio.setText(testoDialogo.getString("audio"));
+            testoDialogo.setLocale(Locale.ITALIAN);
         }
+        lingua.setText(testoDialogo.getString("lingua"));
+        audio.setText(testoDialogo.getString("audio"));
 
         effetto.getChildren().add(lingua);
         effetto.getChildren().add(audio);
@@ -219,6 +218,8 @@ public class Menu extends Application {
             } else {
                 testoDialogo.setLocale(Locale.ITALIAN);
             }
+            lingua.setText(testoDialogo.getString("lingua"));
+            audio.setText(testoDialogo.getString("audio"));
             aggiornaLinguaSuInterfaccia();
         });
 

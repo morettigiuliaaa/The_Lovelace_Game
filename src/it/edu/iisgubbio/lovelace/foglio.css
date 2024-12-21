@@ -3,8 +3,6 @@
     src: url('font.ttf');
 }
 
-
-
 #paneSfondo {
     -fx-background-image: url("sfondo_menu.png");
     -fx-background-repeat: no-repeat;
@@ -53,8 +51,6 @@
 	-fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 1.0), 20, 0.9, 0, 0);
 }
 
-
-
 #sottotitolo {
 	-fx-text-fill: white;
 	-fx-font-family: Minecraft;
@@ -73,6 +69,8 @@
 
 #impostazioni {
 	-fx-text-fill: white;
+	-fx-alignment: center;
 	-fx-font-family: Minecraft;
-	-fx-font-size: 30
+	-fx-font-size: 30;
+	
 }

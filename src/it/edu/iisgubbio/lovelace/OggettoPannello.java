@@ -1,4 +1,4 @@
-package it.edu.iisgubbio.lovelace.demo;
+package it.edu.iisgubbio.lovelace;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -12,8 +12,12 @@ import javafx.util.Duration;
 
 public class OggettoPannello {
     Group finestra = new Group();
+    
+    private boolean stato; //indica se l'animazione del testo è finita o no
+    
+    
 
-    public OggettoPannello(String testo, Image personaggio) {
+	public OggettoPannello(String testo, Image personaggio) {
         // Crea la finestra con lo sfondo
         Rectangle sfondo = new Rectangle(900, 300);
         sfondo.setFill(Color.rgb(0 , 0 , 0 , 0.7)); // Sfondo semitrasparente
@@ -57,16 +61,30 @@ public class OggettoPannello {
                 textBuilder.append(testoDialogo.charAt(index[0]));  // Aggiungi il carattere
                 dialogo.setText(textBuilder.toString());             // Imposta il testo del dialogo
                 index[0]++;  // Incrementa l'indice per il prossimo carattere
+                stato=false;
+            }else {
+            	stato=true;
             }
         });
 
         // Aggiungi la KeyFrame alla Timeline
         timeline.getKeyFrames().add(keyFrame);
-        timeline.setCycleCount(testoDialogo.length());  // Si ferma quando tutto il testo è scritto
+        timeline.setCycleCount(testoDialogo.length()+1);  // Si ferma quando tutto il testo è scritto
         timeline.setRate(1);  // Velocità dell'effetto
         timeline.play();  // Avvia l'animazione
     }
-
+    
+    /**
+     * metodo che ritorna se l'animazione del testo è conclusa o no
+     * @return lo stato dell'animazione true= conlcusa, false= in corso
+     */
+    public boolean statoDiscorso() {
+    	return stato;
+    }
+    public void setStatoDiscorso(boolean stato) {
+		this.stato = stato;
+	}
+    
     // Metodo per ottenere la finestra
     public Group getFinestra() {
         return finestra;
