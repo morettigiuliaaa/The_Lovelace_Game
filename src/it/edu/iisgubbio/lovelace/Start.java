@@ -115,6 +115,8 @@ public class Start{
 		dialogo=new OggettoPannello(nDialogo);
 		areaGioco.getChildren().add(dialogo.getFinestra());
 		
+		
+		
 //      TODO: AUGUSTO E' DA RIMPICCIOLIRE
         
         
