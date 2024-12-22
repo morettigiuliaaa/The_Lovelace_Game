@@ -47,8 +47,8 @@ public class Menu extends Application {
     Image augustoImage = new Image(getClass().getResourceAsStream("augusto.png"));
     ImageView augusto = new ImageView(augustoImage); // Caricamento corretto dell'immagine
 
-    final int LARGHEZZA_AREA_GIOCO = 900;
-    final int ALTEZZA_AREA_GIOCO = 700;
+    final static int LARGHEZZA_AREA_GIOCO = 900;
+    final static int ALTEZZA_AREA_GIOCO = 700;
 
     // ToggleSwitch globale per la lingua
     ToggleSwitch button = new ToggleSwitch();
@@ -57,8 +57,12 @@ public class Menu extends Application {
 
     static double volume=1.0;
     
+    public static Stage finestra;
+    
     @Override
     public void start(Stage finestra) throws Exception {
+    	Menu.finestra=finestra;
+    	
     	//impostiamo la lingua del testo in italiano
         testoDialogo = new RaccoltaTesti(Locale.ITALIAN);
     	
