@@ -48,6 +48,7 @@ public class OggettoPannello {
 		voceAugusto.setVolume(Menu.volume);
 		voceAda.setCycleCount(Animation.INDEFINITE);
 		voceAugusto.setCycleCount(Animation.INDEFINITE);
+		voceAugusto.setCycleCount(Animation.INDEFINITE);
 		indexDialoghi=i;
 		oggettoPannello(testoDialogo.getString(dialogoImage[i].nomeDialogo), dialogoImage[i].immaginePersonaggio);
 	}

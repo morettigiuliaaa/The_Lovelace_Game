@@ -15,8 +15,6 @@ public class DialogoImmagine {
 			personaggio="Ada";
 		}else if(nomeDialogo.indexOf("augusto")!=-1){
 			personaggio="Augusto";
-		}else {
-			personaggio=null;
 		}
 	}
 }

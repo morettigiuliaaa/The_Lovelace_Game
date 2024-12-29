@@ -60,6 +60,8 @@ public class Start{
 	boolean transizione=true; //inidica se bisogna fare la transizione
 	Group gruppo;
 	GiocoInterattivo gioco;
+	
+
 	private void loop() {
 		if(!dialogo.statoDiscorso()) {
 			//aggiorniamo il tempo fino a quando non si interrompe l'animazione
@@ -69,7 +71,7 @@ public class Start{
 			if(!giocoInterattivo) {
 				nDialogo++;
 				//il 4 corrisponde al numero dei dialoghi della prima parte
-				if(nDialogo==1 && !completato) {
+				if(nDialogo==4 && !completato) {
 					giocoInterattivo=true;
 				}
 			}
@@ -80,8 +82,8 @@ public class Start{
 					rettangolo.setFill(Color.BLACK);
 					Group gruppo = new Group(rettangolo);
 					areaGioco.getChildren().add(gruppo);
-					(new FadeIn(gruppo, 2000)).start();
 					transizione=false;
+					(new FadeIn(gruppo, 3000)).start();
 					gioco = new GiocoInterattivo(scena, testoDialogo);
 
 				}
@@ -147,6 +149,7 @@ public class Start{
 		
 //      TODO: AUGUSTO E' DA RIMPICCIOLIRE
     }
+	
 	
 	private void cambiaDialogo() {
 		areaGioco.getChildren().remove(areaGioco.getChildren().size()-1);
