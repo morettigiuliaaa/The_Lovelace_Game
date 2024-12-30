@@ -67,11 +67,11 @@ public class Start{
 			//aggiorniamo il tempo fino a quando non si interrompe l'animazione
 			tempoCambioDialogo=System.currentTimeMillis();
 		}
-		if(System.currentTimeMillis()-tempoCambioDialogo>1000 && dialogo.statoDiscorso() || giocoInterattivo) {
+		if(System.currentTimeMillis()-tempoCambioDialogo>1990 && dialogo.statoDiscorso() || giocoInterattivo) {
 			if(!giocoInterattivo) {
 				nDialogo++;
 				//il 4 corrisponde al numero dei dialoghi della prima parte
-				if(nDialogo==4 && !completato) {
+				if(nDialogo==7 && !completato) {
 					giocoInterattivo=true;
 				}
 			}

@@ -20,15 +20,19 @@ public class OggettoPannello {
     
 	AudioClip voceAda = new AudioClip(getClass().getResource("voceAda.mp3").toString());
 	AudioClip voceAugusto = new AudioClip(getClass().getResource("voceAugusto.mp3").toString());
+	AudioClip strappo = new AudioClip(getClass().getResource("strappo.mp3").toString());
     
 	int indexDialoghi=0;
 	
     //testi
     private DialogoImmagine[] dialogoImage={
-    		new DialogoImmagine("dialogo1ada", adaImage),
-    		new DialogoImmagine("dialogo1augusto", augustoImage),
-    		new DialogoImmagine("dialogo2ada", adaImage),
-    		new DialogoImmagine("dialogo2augusto", augustoImage),
+    		new DialogoImmagine("dialogo1Ada", adaImage),
+    		new DialogoImmagine("dialogo1Augusto", augustoImage),
+    		new DialogoImmagine("Strappo", augustoImage),
+    		new DialogoImmagine("dialogo2Ada", adaImage),
+    		new DialogoImmagine("dialogo2Augusto", augustoImage),
+    		new DialogoImmagine("dialogo3Augusto", augustoImage),
+    		new DialogoImmagine("dialogo4Ada", adaImage),
     };
     
     private boolean stato; //indica se l'animazione del testo è finita o no
@@ -46,6 +50,8 @@ public class OggettoPannello {
 	public OggettoPannello(int i){
 		voceAda.setVolume(Menu.volume);
 		voceAugusto.setVolume(Menu.volume);
+		strappo.setVolume(Menu.volume);
+		strappo.setCycleCount(1);
 		voceAda.setCycleCount(Animation.INDEFINITE);
 		voceAugusto.setCycleCount(Animation.INDEFINITE);
 		voceAugusto.setCycleCount(Animation.INDEFINITE);
@@ -95,6 +101,8 @@ public class OggettoPannello {
         	voceAda.play();
         }else if(dialogoImage[indexDialoghi].personaggio.equals("Augusto")){
         	voceAugusto.play();
+        }else if(dialogoImage[indexDialoghi].personaggio.equals("Strappo")){
+        	strappo.play();
         }
         // Crea una KeyFrame per aggiungere un carattere ogni 100 millisecondi
         KeyFrame keyFrame = new KeyFrame(Duration.millis(50), event -> {
@@ -107,6 +115,7 @@ public class OggettoPannello {
             	stato=true;
             	voceAugusto.stop();
             	voceAda.stop();
+            	strappo.stop();
             }
         });
 

@@ -11,10 +11,12 @@ public class DialogoImmagine {
 		this.immaginePersonaggio=immaginePersonaggio;
 		this.nomeDialogo=nomeDialogo;
 		//cerchiamo il nome del personaggio nel nome del dialogo
-		if(nomeDialogo.indexOf("ada")!=-1) {
+		if(nomeDialogo.indexOf("Ada")!=-1) {
 			personaggio="Ada";
-		}else if(nomeDialogo.indexOf("augusto")!=-1){
+		}else if(nomeDialogo.indexOf("Augusto")!=-1){
 			personaggio="Augusto";
+		}else if(nomeDialogo.indexOf("Strappo")!=-1){
+			personaggio="Strappo";
 		}
 	}
 }
