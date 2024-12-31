@@ -70,8 +70,8 @@ public class Start{
 		if(System.currentTimeMillis()-tempoCambioDialogo>1990 && dialogo.statoDiscorso() || giocoInterattivo) {
 			if(!giocoInterattivo) {
 				nDialogo++;
-				//il 4 corrisponde al numero dei dialoghi della prima parte
-				if(nDialogo==7 && !completato) {
+				//il 7 corrisponde al numero dei dialoghi della prima parte
+				if(nDialogo==1 && !completato) {
 					giocoInterattivo=true;
 				}
 			}
@@ -152,7 +152,11 @@ public class Start{
 	
 	
 	private void cambiaDialogo() {
-		areaGioco.getChildren().remove(areaGioco.getChildren().size()-1);
+		try {
+			areaGioco.getChildren().remove(areaGioco.getChildren().size()-1);
+		}catch (IndexOutOfBoundsException e) {
+		}
+		
 		areaGioco.getChildren().add(dialogo.getFinestra());
 	}
 }

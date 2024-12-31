@@ -14,6 +14,14 @@ public class Domande {
 		this.areaGioco = areaGioco;
 	}
 
+	private boolean rispostaGiusta= false;
+	
+	public boolean isRispostaGiusta() {
+		boolean risposta=rispostaGiusta;
+		rispostaGiusta=false;
+		return risposta;
+	}
+
 	public void mostraDomanda1(RaccoltaTesti testoDialogo) {
 		// Svuota l'area di gioco
 		areaGioco.getChildren().clear();
@@ -76,9 +84,11 @@ public class Domande {
 	private void verificaRisposta1(String risposta) {
 		String rispostaCorretta = "B"; // La risposta corretta per questa domanda
 		if (risposta.equals(rispostaCorretta)) {
-			System.out.println("Risposta corretta!");
+			System.out.println("risposta corretta");
+			rispostaGiusta=true;
 		} else {
-			System.out.println("Risposta sbagliata. Ritenta!");
+			System.out.println("risposta errata");
+			rispostaGiusta=false;
 		}
 	}
 
@@ -145,9 +155,11 @@ public class Domande {
 	private void verificaRisposta2(String risposta) {
 		String rispostaCorretta = "B"; // La risposta corretta per questa domanda
 		if (risposta.equals(rispostaCorretta)) {
-			System.out.println("Risposta corretta!");
+			System.out.println("risposta corretta");
+			rispostaGiusta=true;
 		} else {
-			System.out.println("Risposta sbagliata. Ritenta!");
+			System.out.println("risposta errata");
+			rispostaGiusta=false;
 		}
 	}
 	
@@ -213,9 +225,11 @@ public class Domande {
 	private void verificaRisposta3(String risposta) {
 		String rispostaCorretta = "B"; // La risposta corretta per questa domanda
 		if (risposta.equals(rispostaCorretta)) {
-			System.out.println("Risposta corretta!");
+			System.out.println("risposta corretta");
+			rispostaGiusta=true;
 		} else {
-			System.out.println("Risposta sbagliata. Ritenta!");
+			System.out.println("risposta errata");
+			rispostaGiusta=false;
 		}
 	}
 
@@ -282,9 +296,11 @@ public class Domande {
 	private void verificaRisposta4(String risposta) {
 		String rispostaCorretta = "B"; // La risposta corretta per questa domanda
 		if (risposta.equals(rispostaCorretta)) {
-			System.out.println("Risposta corretta!");
+			System.out.println("risposta corretta");
+			rispostaGiusta=true;
 		} else {
-			System.out.println("Risposta sbagliata. Ritenta!");
+			System.out.println("risposta errata");
+			rispostaGiusta=false;
 		}
 	}
 }
