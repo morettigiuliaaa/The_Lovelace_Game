@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 public class GiocoInterattivo {
@@ -22,6 +23,7 @@ public class GiocoInterattivo {
     private Pane areaGioco = new Pane();
     private Timeline timelineGioco;
 
+    private Rectangle rettangolo = new Rectangle(400,500);
     private Image adaImage = new Image(getClass().getResourceAsStream("ada_sx.png"));
     private ImageView adaferma = new ImageView(adaImage); // Immagine ferma
     
@@ -182,7 +184,7 @@ public class GiocoInterattivo {
     		}
     		
     	}
-    }
+  }
 
     public void gioco(Group gruppo) {
         areaGioco.getChildren().clear();
@@ -193,8 +195,9 @@ public class GiocoInterattivo {
     	(new FadeOut(gruppo, 1000)).start();
         areaGioco.getChildren().add(gruppo);
     	areaGioco.setId("gioco1");
-    	adaImageView.resize(400, 500);
-    	adaImageView.setLayoutX(-70);
+    	areaGioco.getChildren().add(rettangolo);
+    	adaImageView.resize(300, 400);
+    	adaImageView.setLayoutX(30);
     	adaImageView.setLayoutY(85);
     	//adaImageView.toFront();
     }
