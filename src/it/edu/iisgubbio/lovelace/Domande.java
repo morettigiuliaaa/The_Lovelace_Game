@@ -42,21 +42,25 @@ public class Domande {
 		Button risposta4 = new Button(testoDialogo.getString("1risposta4"));
 
 		// Imposta posizione e dimensioni dei bottoni
-		risposta1.setLayoutX(150);
+		risposta1.setLayoutX(125);
 		risposta1.setLayoutY(340);
 		risposta1.setId("bottonedomanda");
+		risposta1.setPrefWidth(250);
 
-		risposta2.setLayoutX(150);
-		risposta2.setLayoutY(390);
+		risposta2.setLayoutX(125);
+		risposta2.setLayoutY(450);
 		risposta2.setId("bottonedomanda");
+		risposta2.setPrefWidth(250);
 
-		risposta3.setLayoutX(350);
+		risposta3.setLayoutX(425);
 		risposta3.setLayoutY(340);
 		risposta3.setId("bottonedomanda");
+		risposta3.setPrefWidth(250);
 
-		risposta4.setLayoutX(350);
-		risposta4.setLayoutY(390);
+		risposta4.setLayoutX(425);
+		risposta4.setLayoutY(450);
 		risposta4.setId("bottonedomanda");
+		risposta4.setPrefWidth(250);
 
 		// Aggiungi controllo delle risposte
 		risposta1.setOnAction(e -> verificaRisposta1("A"));
@@ -107,21 +111,25 @@ public class Domande {
 		Button risposta4 = new Button(testoDialogo.getString("2risposta4"));
 
 		// Imposta posizione e dimensioni dei bottoni
-		risposta1.setLayoutX(100);
-		risposta1.setLayoutY(320);
-		risposta1.setPrefWidth(200);
+		risposta1.setLayoutX(125);
+		risposta1.setLayoutY(340);
+		risposta1.setId("bottonedomanda");
+		risposta1.setPrefWidth(250);
 
-		risposta2.setLayoutX(100);
-		risposta2.setLayoutY(360);
-		risposta2.setPrefWidth(200);
+		risposta2.setLayoutX(125);
+		risposta2.setLayoutY(450);
+		risposta2.setId("bottonedomanda");
+		risposta2.setPrefWidth(250);
 
-		risposta3.setLayoutX(100);
-		risposta3.setLayoutY(400);
-		risposta3.setPrefWidth(200);
+		risposta3.setLayoutX(425);
+		risposta3.setLayoutY(340);
+		risposta3.setId("bottonedomanda");
+		risposta3.setPrefWidth(250);
 
-		risposta4.setLayoutX(100);
-		risposta4.setLayoutY(440);
-		risposta4.setPrefWidth(200);
+		risposta4.setLayoutX(425);
+		risposta4.setLayoutY(450);
+		risposta4.setId("bottonedomanda");
+		risposta4.setPrefWidth(250);
 
 		// Aggiungi controllo delle risposte
 		risposta1.setOnAction(e -> verificaRisposta2("A"));
@@ -171,27 +179,31 @@ public class Domande {
 		Button risposta4 = new Button(testoDialogo.getString("3risposta4"));
 
 		// Imposta posizione e dimensioni dei bottoni
-		risposta1.setLayoutX(100);
-		risposta1.setLayoutY(320);
-		risposta1.setPrefWidth(200);
+		risposta1.setLayoutX(125);
+		risposta1.setLayoutY(340);
+		risposta1.setId("bottonedomanda");
+		risposta1.setPrefWidth(250);
 
-		risposta2.setLayoutX(100);
-		risposta2.setLayoutY(360);
-		risposta2.setPrefWidth(200);
+		risposta2.setLayoutX(125);
+		risposta2.setLayoutY(450);
+		risposta2.setId("bottonedomanda");
+		risposta2.setPrefWidth(250);
 
-		risposta3.setLayoutX(100);
-		risposta3.setLayoutY(400);
-		risposta3.setPrefWidth(200);
+		risposta3.setLayoutX(425);
+		risposta3.setLayoutY(340);
+		risposta3.setId("bottonedomanda");
+		risposta3.setPrefWidth(250);
 
-		risposta4.setLayoutX(100);
-		risposta4.setLayoutY(440);
-		risposta4.setPrefWidth(200);
+		risposta4.setLayoutX(425);
+		risposta4.setLayoutY(450);
+		risposta4.setId("bottonedomanda");
+		risposta4.setPrefWidth(250);
 
 		// Aggiungi controllo delle risposte
-		risposta1.setOnAction(e -> verificaRisposta1("A"));
-		risposta2.setOnAction(e -> verificaRisposta1("B"));
-		risposta3.setOnAction(e -> verificaRisposta1("C"));
-		risposta4.setOnAction(e -> verificaRisposta1("D"));
+		risposta1.setOnAction(e -> verificaRisposta3("A"));
+		risposta2.setOnAction(e -> verificaRisposta3("B"));
+		risposta3.setOnAction(e -> verificaRisposta3("C"));
+		risposta4.setOnAction(e -> verificaRisposta3("D"));
 
 		// Aggiungi tutto all'area di gioco
 		areaGioco.getChildren().addAll(sfondo, domanda, risposta1, risposta2, risposta3, risposta4);
@@ -236,27 +248,31 @@ public class Domande {
 		Button risposta4 = new Button(testoDialogo.getString("4risposta4"));
 
 		// Imposta posizione e dimensioni dei bottoni
-		risposta1.setLayoutX(100);
-		risposta1.setLayoutY(320);
-		risposta1.setPrefWidth(200);
+		risposta1.setLayoutX(125);
+		risposta1.setLayoutY(340);
+		risposta1.setId("bottonedomanda");
+		risposta1.setPrefWidth(250);
 
-		risposta2.setLayoutX(100);
-		risposta2.setLayoutY(360);
-		risposta2.setPrefWidth(200);
+		risposta2.setLayoutX(125);
+		risposta2.setLayoutY(450);
+		risposta2.setId("bottonedomanda");
+		risposta2.setPrefWidth(250);
 
-		risposta3.setLayoutX(100);
-		risposta3.setLayoutY(400);
-		risposta3.setPrefWidth(200);
+		risposta3.setLayoutX(425);
+		risposta3.setLayoutY(340);
+		risposta3.setId("bottonedomanda");
+		risposta3.setPrefWidth(250);
 
-		risposta4.setLayoutX(100);
-		risposta4.setLayoutY(440);
-		risposta4.setPrefWidth(200);
+		risposta4.setLayoutX(425);
+		risposta4.setLayoutY(450);
+		risposta4.setId("bottonedomanda");
+		risposta4.setPrefWidth(250);
 
 		// Aggiungi controllo delle risposte
-		risposta1.setOnAction(e -> verificaRisposta2("A"));
-		risposta2.setOnAction(e -> verificaRisposta2("B"));
-		risposta3.setOnAction(e -> verificaRisposta2("C"));
-		risposta4.setOnAction(e -> verificaRisposta2("D"));
+		risposta1.setOnAction(e -> verificaRisposta4("A"));
+		risposta2.setOnAction(e -> verificaRisposta4("B"));
+		risposta3.setOnAction(e -> verificaRisposta4("C"));
+		risposta4.setOnAction(e -> verificaRisposta4("D"));
 
 		// Aggiungi tutto all'area di gioco
 		areaGioco.getChildren().addAll(sfondo, domanda, risposta1, risposta2, risposta3, risposta4);

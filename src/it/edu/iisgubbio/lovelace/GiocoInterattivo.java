@@ -92,23 +92,15 @@ public class GiocoInterattivo {
 
     // Gestisce la pressione dei tasti
     private void pigiato(KeyEvent evento) {
-        if ((evento.getCode() == KeyCode.D || evento.getCode() == KeyCode.RIGHT) && !isMoving) {
+        if ((evento.getCode() == KeyCode.D || evento.getCode() == KeyCode.RIGHT)) {
             double posizione = adaferma.getX();
             adaferma.setX(posizione + 2.0);
 //            movimentoAdaAvanti(areaGioco); // Avvia animazione se non è già in movimento
-        } else {
-              movimentoTimeline.stop();  // Ferma la timeline
-              areaGioco.getChildren().clear();
-              areaGioco.getChildren().add(adaferma);  // Mostra immagine statica
-             }
-        if ((evento.getCode() == KeyCode.A || evento.getCode() == KeyCode.LEFT) && !isMoving) {
+        }
+        if ((evento.getCode() == KeyCode.A || evento.getCode() == KeyCode.LEFT)) {
             double posizione = adaferma.getX();
             adaferma.setX(posizione - 2.0);
 //            movimentoAdaDietro(areaGioco); // Avvia animazione se non è già in movimento
-        }else {
-        	movimentoTimeline.stop();  // Ferma la timeline
-            areaGioco.getChildren().clear();
-            areaGioco.getChildren().add(adaferma);  // Mostra immagine statica
         }
     }
 
@@ -127,10 +119,9 @@ public class GiocoInterattivo {
     }
 
     public void evoluzioneGioco(RaccoltaTesti testoDialogo) {
-    	Domande domande = new Domande(areaGioco);
+    	scena.setOnKeyPressed(e -> pigiato(e));  // Gestisce la pressione del tasto
 
-        // Mostra una domanda all'inizio
-        domande.mostraDomanda1(testoDialogo);
+    	
         if (System.currentTimeMillis() - time > 300000) {
             System.out.println("completato");
             completato = true;
@@ -144,6 +135,26 @@ public class GiocoInterattivo {
         (new FadeOut(gruppo, 1000)).start();
         cambioalgioco(gruppo);
     }
+    
+    public void domanda1(RaccoltaTesti testoDialogo) {
+    	Domande domande = new Domande(areaGioco);
+        domande.mostraDomanda1(testoDialogo);
+    }
+    
+    public void domanda2(RaccoltaTesti testoDialogo) {
+    	Domande domande = new Domande(areaGioco);
+        domande.mostraDomanda2(testoDialogo);
+    }
+    
+    public void domanda3(RaccoltaTesti testoDialogo) {
+    	Domande domande = new Domande(areaGioco);
+        domande.mostraDomanda3(testoDialogo);
+    }
+    
+    public void domanda4(RaccoltaTesti testoDialogo) {
+    	Domande domande = new Domande(areaGioco);
+        domande.mostraDomanda4(testoDialogo);
+    }
 
     public void cambioalgioco(Group gruppo) {
     	(new FadeOut(gruppo, 1000)).start();
@@ -153,10 +164,7 @@ public class GiocoInterattivo {
         adaferma.setLayoutY(700);
         adaferma.toFront();
         areaGioco.getChildren().add(adaferma);
-        
-        
-        scena.setOnKeyPressed(e -> pigiato(e));  // Gestisce la pressione del tasto
-    }
+       }
 
     boolean completato = false;
 

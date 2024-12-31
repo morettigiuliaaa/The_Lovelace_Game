@@ -37,6 +37,10 @@
     -fx-background-color: rgb(125,125,125); 
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.8), 15, 0.7, 0, 0);
 }
+#bottonedomanda:pressed {
+    -fx-background-color: rgb(125,125,125); 
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 1.0), 20, 0.9, 0, 0);
+}
 .button {
     -fx-background-color: rgb(132, 16, 153);
     -fx-text-fill: white;         
