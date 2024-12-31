@@ -17,7 +17,25 @@
 	-fx-background-image: url("casadialogo.png");
 }
 #gioco1{
-	-fx-background-image: url("porta.jpg");
+	-fx-background-image: url("porta.jpeg");
+}
+#bottonedomanda{
+	-fx-background-color: rgb(128, 128, 128);
+    -fx-text-fill: white;         
+    -fx-font-size: 16px;          
+    -fx-padding: 10px 20px;       
+    -fx-border-radius: 10px;      
+    -fx-background-radius: 10px; 
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 15, 0.5, 0, 0);
+    -fx-cursor: hand;             
+    -fx-border-width: 0px;
+    -fx-font-weight: bold;        
+    -fx-alignment: center;
+}
+
+#bottonedomanda:hover {
+    -fx-background-color: rgb(125,125,125); 
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.8), 15, 0.7, 0, 0);
 }
 .button {
     -fx-background-color: rgb(132, 16, 153);

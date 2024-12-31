@@ -1,5 +1,6 @@
 package it.edu.iisgubbio.lovelace;
 
+import it.edu.iisgubbio.lovelace.*;
 import it.edu.iisgubbio.lovelace.dynamicEffects.FadeOut;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -44,57 +45,57 @@ public class GiocoInterattivo {
         scena = scenaPrimaria;
         areaGioco = (Pane) scena.getRoot();
         Menu.finestra.setScene(scena);
-        timelineGioco = new Timeline(new KeyFrame(Duration.millis(100), x -> cambioScena()));
+        timelineGioco = new Timeline(new KeyFrame(Duration.millis(100), x -> cambioScena(testoDialogo)));
         timelineGioco.setCycleCount(Animation.INDEFINITE);
         timelineGioco.play();
     }
 
-    // Metodo per il movimento in avanti (animazione)
-    public void movimentoAdaAvanti(Pane areaGioco) {
-        if (adaImageView == null) {
-            adaImageView = new ImageView(new Image(FRAMES[0]));
-            adaImageView.setFitWidth(100);
-            adaImageView.setFitHeight(150);
-            areaGioco.getChildren().add(adaImageView);
-        }
-
-        // Avvio dell'animazione in avanti
-        movimentoTimeline = new Timeline(new KeyFrame(Duration.millis(700), event -> {
-            frameIndex = (frameIndex + 1) % FRAMES.length;  // Incrementa in modo ciclico
-            adaImageView.setImage(new Image(FRAMES[frameIndex]));
-        }));
-
-        movimentoTimeline.setCycleCount(Timeline.INDEFINITE);
-        movimentoTimeline.play();
-        isMoving = true;  // Imposta stato in movimento
-    }
-
-    // Metodo per il movimento indietro (animazione)
-    public void movimentoAdaDietro(Pane areaGioco) {
-        if (adaImageView == null) {
-            adaImageView = new ImageView(new Image(FRAMES[5])); // Inizia dall'ultimo frame
-            adaImageView.setFitWidth(100);
-            adaImageView.setFitHeight(150);
-            areaGioco.getChildren().add(adaImageView);
-        }
-
-        // Avvio dell'animazione indietro
-        movimentoTimeline = new Timeline(new KeyFrame(Duration.millis(700), event -> {
-            frameIndex = (frameIndex - 1 + FRAMES.length) % FRAMES.length;  // Decrementa in modo ciclico
-            adaImageView.setImage(new Image(FRAMES[frameIndex]));
-        }));
-
-        movimentoTimeline.setCycleCount(Timeline.INDEFINITE);
-        movimentoTimeline.play();
-        isMoving = true;  // Imposta stato in movimento
-    }
+//    // Metodo per il movimento in avanti (animazione)
+//    public void movimentoAdaAvanti(Pane areaGioco) {
+//        if (adaImageView == null) {
+//            adaImageView = new ImageView(new Image(FRAMES[0]));
+//            adaImageView.setFitWidth(100);
+//            adaImageView.setFitHeight(150);
+//            areaGioco.getChildren().add(adaImageView);
+//        }
+//
+//        // Avvio dell'animazione in avanti
+//        movimentoTimeline = new Timeline(new KeyFrame(Duration.millis(700), event -> {
+//            frameIndex = (frameIndex + 1) % FRAMES.length;  // Incrementa in modo ciclico
+//            adaImageView.setImage(new Image(FRAMES[frameIndex]));
+//        }));
+//
+//        movimentoTimeline.setCycleCount(Timeline.INDEFINITE);
+//        movimentoTimeline.play();
+//        isMoving = true;  // Imposta stato in movimento
+//    }
+//
+//    // Metodo per il movimento indietro (animazione)
+//    public void movimentoAdaDietro(Pane areaGioco) {
+//        if (adaImageView == null) {
+//            adaImageView = new ImageView(new Image(FRAMES[5])); // Inizia dall'ultimo frame
+//            adaImageView.setFitWidth(100);
+//            adaImageView.setFitHeight(150);
+//            areaGioco.getChildren().add(adaImageView);
+//        }
+//
+//        // Avvio dell'animazione indietro
+//        movimentoTimeline = new Timeline(new KeyFrame(Duration.millis(700), event -> {
+//            frameIndex = (frameIndex - 1 + FRAMES.length) % FRAMES.length;  // Decrementa in modo ciclico
+//            adaImageView.setImage(new Image(FRAMES[frameIndex]));
+//        }));
+//
+//        movimentoTimeline.setCycleCount(Timeline.INDEFINITE);
+//        movimentoTimeline.play();
+//        isMoving = true;  // Imposta stato in movimento
+//    }
 
     // Gestisce la pressione dei tasti
     private void pigiato(KeyEvent evento) {
         if ((evento.getCode() == KeyCode.D || evento.getCode() == KeyCode.RIGHT) && !isMoving) {
             double posizione = adaferma.getX();
             adaferma.setX(posizione + 2.0);
-            movimentoAdaAvanti(areaGioco); // Avvia animazione se non è già in movimento
+//            movimentoAdaAvanti(areaGioco); // Avvia animazione se non è già in movimento
         } else {
               movimentoTimeline.stop();  // Ferma la timeline
               areaGioco.getChildren().clear();
@@ -103,7 +104,7 @@ public class GiocoInterattivo {
         if ((evento.getCode() == KeyCode.A || evento.getCode() == KeyCode.LEFT) && !isMoving) {
             double posizione = adaferma.getX();
             adaferma.setX(posizione - 2.0);
-            movimentoAdaDietro(areaGioco); // Avvia animazione se non è già in movimento
+//            movimentoAdaDietro(areaGioco); // Avvia animazione se non è già in movimento
         }else {
         	movimentoTimeline.stop();  // Ferma la timeline
             areaGioco.getChildren().clear();
@@ -112,20 +113,24 @@ public class GiocoInterattivo {
     }
 
     // Metodo per cambiare scena (continuazione logica del gioco)
-    private void cambioScena() {
+    private void cambioScena(RaccoltaTesti testoDialogo) {
         int nElemnti = areaGioco.getChildren().size();
         Group gruppo = (Group) areaGioco.getChildren().get(nElemnti - 1);
         if (gruppo.getOpacity() >= 1) {
             timelineGioco.stop();
             timelineGioco.getKeyFrames().clear();
             time = System.currentTimeMillis();
-            timelineGioco.getKeyFrames().add(new KeyFrame(Duration.millis(50), x -> evoluzioneGioco()));
+            timelineGioco.getKeyFrames().add(new KeyFrame(Duration.millis(50), x -> evoluzioneGioco(testoDialogo)));
             timelineGioco.play();
             gioco(gruppo);
         }
     }
 
-    public void evoluzioneGioco() {
+    public void evoluzioneGioco(RaccoltaTesti testoDialogo) {
+    	Domande domande = new Domande(areaGioco);
+
+        // Mostra una domanda all'inizio
+        domande.mostraDomanda1(testoDialogo);
         if (System.currentTimeMillis() - time > 300000) {
             System.out.println("completato");
             completato = true;
@@ -135,19 +140,21 @@ public class GiocoInterattivo {
 
     public void gioco(Group gruppo) {
         areaGioco.getChildren().clear();
-        gruppo.getChildren().add(adaferma);
         areaGioco.getChildren().add(gruppo);
         (new FadeOut(gruppo, 1000)).start();
         cambioalgioco(gruppo);
     }
 
     public void cambioalgioco(Group gruppo) {
-        areaGioco.setId("gioco1");
+    	(new FadeOut(gruppo, 1000)).start();
+    	areaGioco.setId("gioco1");
         adaferma.resize(500, 600);
-        adaferma.setLayoutX(40);
+        adaferma.setLayoutX(60);
         adaferma.setLayoutY(700);
+        adaferma.toFront();
         areaGioco.getChildren().add(adaferma);
-        (new FadeOut(gruppo, 1000)).start();
+        
+        
         scena.setOnKeyPressed(e -> pigiato(e));  // Gestisce la pressione del tasto
     }
 
