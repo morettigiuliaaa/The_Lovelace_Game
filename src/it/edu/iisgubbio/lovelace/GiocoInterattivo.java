@@ -27,7 +27,7 @@ public class GiocoInterattivo {
 	private Timeline timelineGioco;
 
 	private Rectangle rettangolo = new Rectangle(250, 400);
-	private Rectangle rettangoloada = new Rectangle(30, 400);
+	private Rectangle rettangoloada = new Rectangle(30, 413);
 	private Image adaImage = new Image(getClass().getResourceAsStream("ada_sx.png"));
 	private ImageView adaferma = new ImageView(adaImage); // Immagine ferma
 
@@ -62,15 +62,22 @@ public class GiocoInterattivo {
 	public void movimentoAdaAvanti(Pane areaGioco) {
 		if (adaImageView == null) {
 			adaImageView = new ImageView(new Image(FRAMES[0]));
-			adaImageView.setFitWidth(100);
-			adaImageView.setFitHeight(150);
 			areaGioco.getChildren().add(adaImageView);
 		}
-
+		
+		adaImageView.setFitWidth(490);
+		adaImageView.setFitHeight(490);
 		// Avvio dell'animazione in avanti
 		movimentoTimeline = new Timeline(new KeyFrame(Duration.millis(100), event -> {
 			frameIndex = (frameIndex + 1) % FRAMES.length;  // Incrementa in modo ciclico
-			adaImageView.setImage(new Image(FRAMES[frameIndex]));
+			//limitiamo lo spostamento
+			if(adaferma.getX()<610) {
+				adaImageView.setImage(new Image(FRAMES[frameIndex]));
+				adaferma.setX(adaferma.getX() + 20.0);
+				rettangoloada.setX(adaferma.getX()+adaferma.getFitWidth()-220);
+			}else {
+				adaImageView.setImage(adaImage);
+			}
 		}));
 
 		movimentoTimeline.setCycleCount(Timeline.INDEFINITE);
@@ -82,75 +89,91 @@ public class GiocoInterattivo {
 	public void movimentoAdaDietro(Pane areaGioco) {
 		if (adaImageView == null) {
 			adaImageView = new ImageView(new Image(FRAMES[5])); // Inizia dall'ultimo frame
-			adaImageView.setFitWidth(100);
-			adaImageView.setFitHeight(150);
 			areaGioco.getChildren().add(adaImageView);
-			
 		}
-
+		
 		// Avvio dell'animazione indietro
 		movimentoTimeline = new Timeline(new KeyFrame(Duration.millis(100), event -> {
 			frameIndex = (frameIndex - 1 + FRAMES.length) % FRAMES.length;  // Decrementa in modo ciclico
-			adaImageView.setImage(new Image(FRAMES[frameIndex]));
+			//limitiamo lo spostamento
+			if(adaferma.getX()>-200) {
+				adaImageView.setImage(new Image(FRAMES[frameIndex]));
+				adaferma.setX(adaferma.getX() - 20.0);
+				rettangoloada.setX(adaferma.getX()+adaferma.getFitWidth()-220);
+			}else {
+				adaImageView.setImage(adaImage);
+			}
 		}));
 
 		movimentoTimeline.setCycleCount(Timeline.INDEFINITE);
 		movimentoTimeline.play();
+		adaImageView.setFitWidth(490);
+		adaImageView.setFitHeight(490);
 		isMoving = true;  // Imposta stato in movimento
 	}
 
 	// Gestisce la pressione dei tasti
+	long tempoSalto=0;
 	private void pigiato(KeyEvent evento) {
 	    if (evento.getCode() == KeyCode.D || evento.getCode() == KeyCode.RIGHT) {
-	        double posizione = adaferma.getX();
-	        adaferma.setX(posizione + 10.0);
-	        rettangoloada.setX(adaferma.getX());
 	        if (movimentoTimeline == null) {
 	            movimentoAdaAvanti(areaGioco); // Avvia animazione se non è già in movimento
 	        }
 	    }
 	    if (evento.getCode() == KeyCode.A || evento.getCode() == KeyCode.LEFT) {
-	        double posizione = adaferma.getX();
-	        adaferma.setX(posizione - 10.0);
-	        rettangoloada.setX(adaferma.getX());
 	        if (movimentoTimeline == null) {
 	            movimentoAdaDietro(areaGioco); // Avvia animazione se non è già in movimento
 	        }
 	    }
 	    if (evento.getCode() == KeyCode.W || evento.getCode() == KeyCode.UP) {
-	        saltoAda(); // Attiva il salto
+	    	if(System.currentTimeMillis()-tempoSalto>1000) { //puoi ripetere il salto 1Sec dopo la fine del precedente
+	    		saltoAda(); // Attiva il salto
+	    	}
+	        
 	    }
 	}
 
 
 	private void rilasciato(KeyEvent evento) {
-		if(movimentoTimeline!=null){
-			movimentoTimeline.stop();
-			movimentoTimeline=null;
-			adaImageView.setImage(adaImage);
+		if(evento.getCode() == KeyCode.A || evento.getCode() == KeyCode.LEFT || evento.getCode() == KeyCode.D || evento.getCode() == KeyCode.RIGHT) {
+			if(movimentoTimeline!=null){
+				movimentoTimeline.stop();
+				movimentoTimeline=null;
+				adaImageView.setImage(adaImage);
+			}
 		}
-
 	}
 	
-	
+	Timeline saltoTimeline;
 	private void saltoAda() {
-	    double posizioneInizialeY = adaferma.getY();
-	    double altezzaSalto = 500.0;
-
-	    Timeline saltoTimeline = new Timeline(
-	        // Salita
-	        new KeyFrame(Duration.millis(500), event -> {
-	            adaferma.setY(posizioneInizialeY - altezzaSalto);
-	            rettangoloada.setY(adaferma.getY());
-	        }),
-	        // Discesa
-	        new KeyFrame(Duration.millis(1000), event -> {
-	            adaferma.setY(posizioneInizialeY);
-	            rettangoloada.setY(adaferma.getY());
-	        })
-	    );
-	    saltoTimeline.setCycleCount(1); // Esegui solo una volta
-	    saltoTimeline.play();
+		if(saltoTimeline==null) {
+			double altezzaSalto = 250.0;
+			saltoTimeline = new Timeline(
+					// Salita
+					new KeyFrame(Duration.millis(10), event -> {
+						adaferma.setY(adaferma.getY() - altezzaSalto/50);
+						rettangoloada.setY(adaferma.getY()+40);
+					})
+			);
+			saltoTimeline.setCycleCount(50); // Esegui solo una volta
+			saltoTimeline.play();
+			saltoTimeline.setOnFinished(e->{
+				saltoTimeline.getKeyFrames().clear();
+				saltoTimeline.getKeyFrames().add(
+					new KeyFrame(Duration.millis(10), event -> {
+						if(adaferma.getY()<140) {
+							adaferma.setY(adaferma.getY() + altezzaSalto/50);
+							rettangoloada.setY(adaferma.getY()+40);
+						}else {
+				    		tempoSalto=System.currentTimeMillis(); //salviamo quando è finito il salto
+							saltoTimeline.stop();
+							saltoTimeline=null;
+						}
+					})
+				);
+				saltoTimeline.play();
+			});
+		}
 	}
 
 
@@ -167,11 +190,6 @@ public class GiocoInterattivo {
 			gioco(gruppo);
 		}
 	}
-	Domande domanda;
-	int nDomanda=1;
-	long time;
-	long timeDomande; //tempo in millis nel quale è stata fatta la domanda
-	Pane schermataGioco = new Pane(); //variabile di appoggio per areaGioco
 	
 	public void scenauno(RaccoltaTesti testoDialogo, Group gruppo) {
 
@@ -179,13 +197,38 @@ public class GiocoInterattivo {
 		if (intersezUno.getBoundsInLocal().getWidth() != -1) {
 			scenadue(testoDialogo, gruppo);
 		}
-
 	}
 	
+	Domande domanda;
+	int nDomanda=1;
+	long time;
+	long timeDomande; //tempo in millis nel quale è stata fatta la domanda
+	Pane schermataGioco = new Pane(); //variabile di appoggio per areaGioco
+	OggettoPannello dialogo; //per un dialogo
+	Group dialogoView; //per visualizzare un dialogo
 	public void scenadue(RaccoltaTesti testoDialogo, Group gruppo) {
-		(new FadeOut(gruppo, 1000)).start();
-		areaGioco.getChildren().clear();
-		areaGioco.setId("dialogo");
+		if(!areaGioco.getId().equals("dialogo")) {
+			areaGioco.getChildren().clear();
+			areaGioco.getChildren().add(gruppo);
+			(new FadeOut(gruppo, 1000)).start();
+			areaGioco.setId("dialogo");
+			//per far comparire un unico dialogo
+			int nDialogo=1;
+			dialogo = new OggettoPannello(nDialogo);
+			dialogoView=dialogo.getFinestra();
+			areaGioco.getChildren().add(dialogoView);
+			
+			timelineGioco.stop();
+			timelineGioco.getKeyFrames().clear();
+			timelineGioco.getKeyFrames().add(new KeyFrame(Duration.millis(50), x -> scenadue(testoDialogo, gruppo)));
+			timelineGioco.play();
+		}
+		//per rimuovere il dialogo una volta conluso
+		if(dialogo!=null && dialogo.statoDiscorso()) {
+			System.out.println("rimosso");
+			areaGioco.getChildren().remove(dialogoView);
+			dialogo=null;
+		}
 		
 //		//come far comparire
 //    	if(adaImageView.getX()>50) { //TODO: da cambiare con l'avvenuta collisione
@@ -241,19 +284,21 @@ public class GiocoInterattivo {
 		areaGioco.getChildren().add(gruppo);
 		areaGioco.setId("gioco1");
 		areaGioco.getChildren().add(rettangolo);
-		adaImageView.resize(300, 400);
-		adaImageView.setLayoutX(30);
-		adaImageView.setLayoutY(85);
+		//le dimesnioni seguenti sono quelle originali delle foto
+		adaImageView.setFitWidth(490);
+		adaImageView.setFitHeight(490);
+		adaferma.setFitWidth(490);
+		adaferma.setFitHeight(490);
+		adaferma.setX(0);
+		adaferma.setY(100);
+		//posizionamento rettangolo collisione
+		rettangoloada.setX(adaferma.getX()+adaferma.getFitWidth()-220);
+		rettangoloada.setY(adaferma.getY()+40);
+		rettangoloada.setVisible(false);
 		rettangolo.setY(125);
 		rettangolo.setX(550);
 		rettangolo.setVisible(false);
-		rettangoloada.setX(adaImageView.getLayoutX());
-	    rettangoloada.setY(adaImageView.getLayoutY());
 		areaGioco.getChildren().add(rettangoloada);
-		System.out.println(adaImageView.getX());
-		System.out.println(adaImageView.getY());
-		System.out.println(adaferma.getX());
-		System.out.println(adaferma.getY());
 		//adaImageView.toFront();
 	}
 
