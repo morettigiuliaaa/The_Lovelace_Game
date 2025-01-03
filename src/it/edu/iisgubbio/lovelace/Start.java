@@ -71,7 +71,7 @@ public class Start{
 			if(!giocoInterattivo) {
 				nDialogo++;
 				//il 7 corrisponde al numero dei dialoghi della prima parte
-				if(nDialogo==7 && !completato) {
+				if(nDialogo==1 && !completato) {
 					giocoInterattivo=true;
 				}
 			}
