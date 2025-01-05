@@ -1,22 +1,21 @@
 #!/bin/bash
 
-# ATTENZIONE: questo script è stato riadattato da un altro che usava Maven
-#             per questo alcuni nomi di direcotory o impostazioni potrebbero
-#             risultare ridondanti
+# ATTENZIONE: 
+# - questo script cancella e poi ricrea la cartella target
+# - i binari (classi, immagini, ...) devono essere nella cartella bin
 #
-# linux: nessuna ric hiesta particolare
+# questo script è stato riadattato da un altro che usava Maven
+# per questo alcuni nomi di direcotory o impostazioni potrebbero
+# risultare ridondanti
+#
+# linux: bisogna aver installato binutils
 # macOS: devono esserci i file per firmare le applicazioni
-# 
-# - le icone sono nella cartella icone
-# - su windows deve essere installato 7-Zip
+# windows: serve avere installato 7zip, gitbash
 #
 # - la variabile JAVA_HOME deve essere impostata 
 #   manualmente facendo una cosa del genere "export JAVA_HOME=/c/java/sdk" 
 #   usando sdkman con qualcosa tipo "sdk use java 21.0.5.fx-librca"
 #
-# - va creata la cartella target con dentro le cartelle jars e lavoro
-# - il file jar si può creare da Eclipse oppure
-#   "jar --create --file target/jars/lovelace.jar -C bin it"
 
 
 if [ -z "$JAVA_HOME" ]; then
@@ -26,7 +25,7 @@ fi
 
 # comando per jpackage
 JPACKAGE=$JAVA_HOME/bin/jpackage
-# dove stanno i jar (cartella impostata nel file pom.xml)
+# dove stanno i jar (uno solo in questo caso, lo crea questo script)
 CARTELLA_JARS=target/jars
 # cartella di lavoro
 CARTELLA_LAVORO=target/lavoro
@@ -45,7 +44,6 @@ CPU=$(uname -m)
 # nome icona, dipende dal sistema operativo
 # windows meglio lasciarlo in else (perché?)
 if [[ "$OSTYPE" == "darwin"*  ]]; then
-    # icona per macOS
     ICONA=icone/icona.icns
     TIPO_PACCHETTO="dmg"
     COMANDO="$JPACKAGE --name $NOME_APPLICAZIONE --app-version $VERSIONE --icon $ICONA --type $TIPO_PACCHETTO \
@@ -57,7 +55,6 @@ if [[ "$OSTYPE" == "darwin"*  ]]; then
     --mac-package-identifier it.edu.iisgubbio.lovelace"
     BUNDLE_NAME="$NOME_APPLICAZIONE-macOS-$CPU.dmg"
 elif [[ "$OSTYPE" == "linux"* ]]; then
-    # icona le Linux (l'unico normale visto il tipo del file!)
     ICONA=icone/icona.png
     TIPO_PACCHETTO="app-image"
     COMANDO="$JPACKAGE --name $NOME_APPLICAZIONE --app-version $VERSIONE --icon $ICONA --type $TIPO_PACCHETTO \
@@ -66,28 +63,32 @@ elif [[ "$OSTYPE" == "linux"* ]]; then
     --main-class $CLASSE_PRINCIPALE --main-jar $JAR_PRINCIPALE"
     BUNDLE_NAME="$NOME_APPLICAZIONE-linux-$CPU.tgz"
 else
-    # icona per Windows
+    # https://github.com/gluonhq/scenebuilder/pull/358/files per l'opzione java.library.path
+    # in alcune installazioni su windows pare che le librerie vengano altrimenti cercarte 
+    # fuori dal pacchetto
+    # NON sembrano servire: --java-options -Dsun.java2d.d3d=false --java-options -Dsun.java2d.noddraw=true
     ICONA=icone/icona.ico
     TIPO_PACCHETTO="app-image"
     COMANDO="$JPACKAGE --name $NOME_APPLICAZIONE --app-version $VERSIONE --icon $ICONA --type $TIPO_PACCHETTO \
     --input $CARTELLA_LAVORO --dest $DESTINAZIONE \
     --add-modules javafx.controls,javafx.media,javafx.fxml,javafx.web,jdk.charsets \
-    --main-class $CLASSE_PRINCIPALE --main-jar $JAR_PRINCIPALE"
+    --main-class $CLASSE_PRINCIPALE --main-jar $JAR_PRINCIPALE \
+    --java-options \"-Djava.library.path=runtime\bin;runtime\lib\""
     BUNDLE_NAME="$NOME_APPLICAZIONE-win-$CPU.zip"
 fi
 
 echo "----- ambiente di lavoro -------------------------------------"
 echo "JAVA_HOME        : $JAVA_HOME"
 echo "JPACKAGE         : $JPACKAGE"
-echo "MAVEN            : $(which mvn)"
 echo "OSTYPE           : $OSTYPE"
 echo ""
 echo "----- cartelle -----------------------------------------------"
-echo "CARTELLA_JARS  : $CARTELLA_JARS"
-echo "JAR_PRINCIPALE : $JAR_PRINCIPALE"
-echo "CARTELLA_LAVORO: $CARTELLA_LAVORO"
-echo "DESTINAZIONE   : $DESTINAZIONE"
-echo "TIPO_PACCHETTO : $TIPO_PACCHETTO"
+echo "CARTELLA_JARS    : $CARTELLA_JARS"
+echo "JAR_PRINCIPALE   : $JAR_PRINCIPALE"
+echo "CLASSE_PRINCIPALE: $CLASSE_PRINCIPALE"
+echo "CARTELLA_LAVORO  : $CARTELLA_LAVORO"
+echo "DESTINAZIONE     : $DESTINAZIONE"
+echo "TIPO_PACCHETTO   : $TIPO_PACCHETTO"
 echo ""
 echo "----- artefatto -----------------------------------------------"
 echo "ICONA          : $ICONA"
@@ -100,11 +101,9 @@ echo "--------------------------------------------------------------"
 
 rm -rf target
 mkdir target
-mkdir target/jars
-jar --create --file $CARTELLA_JARS/lovelace.jar -C bin it
-rm -rf $CARTELLA_LAVORO
-rm -rf target/$NOME_APPLICAZIONE*
+mkdir $CARTELLA_JARS
 mkdir $CARTELLA_LAVORO
+jar --create --file $CARTELLA_JARS/lovelace.jar -C bin it
 cp $CARTELLA_JARS/* $CARTELLA_LAVORO
 
 $COMANDO
