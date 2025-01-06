@@ -37,7 +37,7 @@ public class Menu extends Application {
 
     // Caricamento della musica di sottofondo
     String filePathHOME = "LovelaceGameInGame.wav";
-    Media music = new Media(new File(filePathHOME).toURI().toString());
+    Media music = new Media(Menu.class.getResource(filePathHOME).toString());
     MediaPlayer audioClip = new MediaPlayer(music);
 
     // Caricamento delle immagini dei personaggi
