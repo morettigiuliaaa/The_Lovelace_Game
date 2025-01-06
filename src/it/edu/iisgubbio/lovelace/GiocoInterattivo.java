@@ -211,24 +211,38 @@ public class GiocoInterattivo {
 			areaGioco.getChildren().clear();
 			areaGioco.getChildren().add(gruppo);
 			(new FadeOut(gruppo, 1000)).start();
-			areaGioco.setId("dialogo");
-			//per far comparire un unico dialogo
-			int nDialogo=1;
-			dialogo = new OggettoPannello(nDialogo);
-			dialogoView=dialogo.getFinestra();
-			areaGioco.getChildren().add(dialogoView);
-			
-			timelineGioco.stop();
-			timelineGioco.getKeyFrames().clear();
-			timelineGioco.getKeyFrames().add(new KeyFrame(Duration.millis(50), x -> scenadue(testoDialogo, gruppo)));
-			timelineGioco.play();
+			areaGioco.setId("gioco2");
+			adaImageView.setFitWidth(150);
+			adaImageView.setFitHeight(150);
+			adaferma.setFitWidth(150);
+			adaferma.setFitHeight(150);
+			adaferma.setX(0);
+			adaferma.setY(600);
+			//posizionamento rettangolo collisione
+			rettangoloada.setX(adaferma.getX()+adaferma.getFitWidth()-220);
+			rettangoloada.setY(adaferma.getY()+40);
+			rettangoloada.setVisible(false);
+			areaGioco.getChildren().add(rettangoloada);
+			areaGioco.getChildren().add(adaImageView);
+			areaGioco.getChildren().remove(rettangolo);
 		}
-		//per rimuovere il dialogo una volta conluso
-		if(dialogo!=null && dialogo.statoDiscorso()) {
-			System.out.println("rimosso");
-			areaGioco.getChildren().remove(dialogoView);
-			dialogo=null;
-		}
+//			//per far comparire un unico dialogo
+//			int nDialogo=1;
+//			dialogo = new OggettoPannello(nDialogo);
+//			dialogoView=dialogo.getFinestra();
+//			areaGioco.getChildren().add(dialogoView);
+//			
+//			timelineGioco.stop();
+//			timelineGioco.getKeyFrames().clear();
+//			timelineGioco.getKeyFrames().add(new KeyFrame(Duration.millis(50), x -> scenadue(testoDialogo, gruppo)));
+//			timelineGioco.play();
+//		}
+//		//per rimuovere il dialogo una volta conluso
+//		if(dialogo!=null && dialogo.statoDiscorso()) {
+//			System.out.println("rimosso");
+//			areaGioco.getChildren().remove(dialogoView);
+//			dialogo=null;
+//		}
 		
 //		//come far comparire
 //    	if(adaImageView.getX()>50) { //TODO: da cambiare con l'avvenuta collisione

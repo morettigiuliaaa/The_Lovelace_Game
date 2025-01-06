@@ -19,6 +19,9 @@
 #gioco1{
 	-fx-background-image: url("porta.jpeg");
 }
+#gioco2{
+	-fx-background-image: url("sfondo1.jpg");
+}
 #bottonedomanda{
 	-fx-background-color: rgb(128, 128, 128);
     -fx-text-fill: white;         
