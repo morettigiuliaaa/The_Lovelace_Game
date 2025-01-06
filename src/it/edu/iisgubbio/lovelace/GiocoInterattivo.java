@@ -21,6 +21,7 @@ import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 
 public class GiocoInterattivo {
+	GameOver gameover;
 	private boolean arrivatosù = false;
 	private boolean arrivatogiù = true;
 
@@ -250,12 +251,20 @@ public class GiocoInterattivo {
 			adaferma.setFitWidth(150);
 			adaferma.setFitHeight(150);
 			puntoInizioCorpoAda=36;
-			adaImageView.setX(150);
+			adaImageView.setX(40);
 			adaImageView.setY(440);
+			// TODO:
+			// rettangoli sotto le chest 
+			// quadrati per la chest
+			// resize rettangolo ada
+			// rettangolo porta
+			// sistemazione immagine scena due abbassare la chest
+			// set x rettangolo ada
 			//posizionamento rettangolo collisione
+			// quando si fa l'if del bound richiamare la domanda, a apartire dalla 1
 			rettangoloada.setX(adaferma.getX()+adaferma.getFitWidth()-220);
 			rettangoloada.setY(adaferma.getY()+40);
-			rettangoloada.setVisible(false);
+			rettangoloada.setVisible(true);
 			areaGioco.getChildren().add(rettangoloada);
 			areaGioco.getChildren().add(adaImageView);
 			areaGioco.getChildren().remove(gruppo);
