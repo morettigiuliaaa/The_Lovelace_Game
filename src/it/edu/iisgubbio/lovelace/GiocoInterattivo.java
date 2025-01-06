@@ -237,6 +237,10 @@ public class GiocoInterattivo {
 	Pane schermataGioco = new Pane(); //variabile di appoggio per areaGioco
 	OggettoPannello dialogo; //per un dialogo
 	Group dialogoView; //per visualizzare un dialogo
+	Rectangle rettangoloSottoChest1=new Rectangle(183,55);
+	Rectangle rettangoloSottoChest2=new Rectangle(180,70);
+	
+	
 	public void scenadue(RaccoltaTesti testoDialogo, Group gruppo) {
 		if(!areaGioco.getId().equals("gioco2")) {
 			areaGioco.getChildren().clear();
@@ -245,6 +249,13 @@ public class GiocoInterattivo {
 			for(int i=0; i<Menu.LARGHEZZA_AREA_GIOCO; i+=25) {
 				areaGioco.getChildren().add(new Line(i,0,i,Menu.ALTEZZA_AREA_GIOCO));
 			}
+			rettangoloSottoChest1.setLayoutX(230);
+			rettangoloSottoChest1.setLayoutY(400);
+			
+			rettangoloSottoChest2.setLayoutX(425);
+			rettangoloSottoChest2.setLayoutY(250);
+			areaGioco.getChildren().addAll(rettangoloSottoChest1,rettangoloSottoChest2);
+			
 			areaGioco.setId("gioco2");
 			adaImageView.setFitWidth(150);
 			adaImageView.setFitHeight(150);
