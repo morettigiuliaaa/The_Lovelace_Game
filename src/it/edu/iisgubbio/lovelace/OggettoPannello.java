@@ -88,7 +88,8 @@ public class OggettoPannello {
         finestra.setLayoutY(450);
         
         // Chiamare la funzione per l'effetto di scrittura
-        showTypingEffect(dialogo, testo);
+        //showTypingEffect(dialogo, testo);
+        setStatoDiscorso(true);
     }
 	
 
