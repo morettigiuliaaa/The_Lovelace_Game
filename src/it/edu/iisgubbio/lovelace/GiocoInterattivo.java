@@ -124,7 +124,10 @@ public class GiocoInterattivo {
 			}
 		}
 		if (evento.getCode() == KeyCode.W || evento.getCode() == KeyCode.UP) {
-			if (System.currentTimeMillis() - tempoSalto > 100 && Utilita.collisioniRettangoli(mDiRettangoli[0], rettangoloAda)!=0) { // puoi ripetere il salto 1Sec dopo la fine del precedente
+			if (System.currentTimeMillis() - tempoSalto > 100
+					&& Utilita.collisioniRettangoli(mDiRettangoli[0], rettangoloAda) != 0) { // puoi ripetere il salto
+																								// 1Sec dopo la fine del
+																								// precedente
 				if (areaGioco.getId().equals("gioco2")) {
 					saltoAda(440); // Attiva il salto
 				} else if (areaGioco.getId().equals("gioco1")) {
@@ -154,7 +157,7 @@ public class GiocoInterattivo {
 	 */
 	private void saltoAda(int posizioneDaRaggiungere) {
 		if (saltoTimeline == null && !areaGioco.getId().equals("gioco1")) {
-			double altezzaSalto = 250.0;
+			double altezzaSalto = 210.0;
 			saltoTimeline = new Timeline(
 					// Salita
 					new KeyFrame(Duration.millis(9), event -> {
@@ -173,9 +176,9 @@ public class GiocoInterattivo {
 //								adaFerma.setY(adaFerma.getY() + altezzaSalto / 50);
 //								rettangoloAda.setY(adaFerma.getY() + adaFerma.getFitHeight() - 20);
 //							} else {
-								tempoSalto = System.currentTimeMillis(); // salviamo quando è finito il salto
+				tempoSalto = System.currentTimeMillis(); // salviamo quando è finito il salto
 //								saltoTimeline.stop();
-								saltoTimeline = null;
+				saltoTimeline = null;
 //							}
 //						}));
 //				saltoTimeline.play();
@@ -189,28 +192,28 @@ public class GiocoInterattivo {
 	 * 
 	 * @return di quanto deve essere l'offset
 	 */
-	private int valoreOffset() {
-		double adaPosizioneX = adaImageView.getX() + puntoInizioCorpoAda;
-		if (areaGioco.getId().equals("gioco2")) {
-			// i controlli delle posizioni devono essere eseguiti da quello con una
-			// posizione più alta a quello più piccolo
-			// per salire il valore deve essere negativo per scendere positivo
-			if (adaPosizioneX >= 600) {
-				return -170;
-			} else if (adaPosizioneX >= 520) {
-				return -140;
-			} else if (adaPosizioneX >= 430) {
-				return -100;
-			} else if (adaPosizioneX >= 380) {
-				return -40;
-			} else if (adaPosizioneX >= 300) {
-				return 5;
-			} else if (adaPosizioneX >= 170) {
-				return 200;
-			}
-		}
-		return 0;
-	}
+//	private int valoreOffset() {
+//		double adaPosizioneX = adaImageView.getX() + puntoInizioCorpoAda;
+//		if (areaGioco.getId().equals("gioco2")) {
+//			// i controlli delle posizioni devono essere eseguiti da quello con una
+//			// posizione più alta a quello più piccolo
+//			// per salire il valore deve essere negativo per scendere positivo
+//			if (adaPosizioneX >= 600) {
+//				return -170;
+//			} else if (adaPosizioneX >= 520) {
+//				return -140;
+//			} else if (adaPosizioneX >= 430) {
+//				return -100;
+//			} else if (adaPosizioneX >= 380) {
+//				return -40;
+//			} else if (adaPosizioneX >= 300) {
+//				return 5;
+//			} else if (adaPosizioneX >= 170) {
+//				return 200;
+//			}
+//		}
+//		return 0;
+//	}
 
 	// Metodo per cambiare scena (continuazione logica del gioco)
 	private void cambioScena(RaccoltaTesti testoDialogo) {
@@ -232,8 +235,13 @@ public class GiocoInterattivo {
 			scenadue(testoDialogo, gruppo);
 		}
 	}
-	Rectangle testaAda=new Rectangle(rettangoloAda.getWidth(),rettangoloAda.getHeight());
-	
+
+	Rectangle testaAda = new Rectangle(25, 30);
+	Rectangle lava = new Rectangle(200, 60);
+
+	Rectangle chest1 = Utilita.rettangolo(200, 250, 100, 100);
+	Rectangle chest2 = Utilita.rettangolo(460, 100, 100, 100);
+
 	boolean avanti = true;
 	Domande domanda;
 	int nDomanda = 1;
@@ -242,24 +250,22 @@ public class GiocoInterattivo {
 	Pane schermataGioco = new Pane(); // variabile di appoggio per areaGioco
 	OggettoPannello dialogo; // per un dialogo
 	Group dialogoView; // per visualizzare un dialogo
-	Rectangle mDiRettangoli[][] = { { 
-		Utilita.rettangolo(3.5, 575, 190, 5), 
-		Utilita.rettangolo(335.5, 580, 80, 5),
-		Utilita.rettangolo(413, 530, 80, 60), 
-		Utilita.rettangolo(476, 470, 80, 60), 
-		Utilita.rettangolo(556, 430, 80, 60), 
-		Utilita.rettangolo(636,400,260, 60),
-		Utilita.rettangolo(230, 400, 174, 30), 
-		Utilita.rettangolo(435,250,180, 30) 
-	}, {
+	Rectangle mDiRettangoli[][] = { { Utilita.rettangolo(6.5, 575, 190, 5), Utilita.rettangolo(335.5, 580, 90, 5),
+			Utilita.rettangolo(413, 530, 90, 70), Utilita.rettangolo(476, 470, 90, 70),
+			Utilita.rettangolo(556, 430, 90, 70), Utilita.rettangolo(636, 400, 280, 70),
+			Utilita.rettangolo(170, 350, 170, 20), Utilita.rettangolo(415, 180, 180, 30) }, {
 
-	} };
+			} };
 
 	public void scenadue(RaccoltaTesti testoDialogo, Group gruppo) {
-		testaAda.setX(rettangoloAda.getX());
-		testaAda.setY(rettangoloAda.getY());
+		testaAda.setX(rettangoloAda.getX() - 10);
+		testaAda.setY(rettangoloAda.getY() - adaFerma.getFitHeight() + 27);
 		testaAda.setFill(Color.BLUE);
-		System.out.println(rettangoloAda.getX()+" "+rettangoloAda.getY());
+
+		lava.setFill(Color.rgb(1, 0, 0, 0.5));
+		lava.setX(180);
+		lava.setY(600);
+		// System.out.println(rettangoloAda.getX()+" "+rettangoloAda.getY());
 		int nOggettiCollisione = Utilita.collisioniRettangoli(mDiRettangoli[0], rettangoloAda);
 		if (nOggettiCollisione > 1) {
 			avanti = false;
@@ -267,9 +273,21 @@ public class GiocoInterattivo {
 			avanti = true;
 		}
 
-		if (nOggettiCollisione == 0 && saltoTimeline==null) {
-			adaFerma.setY(adaFerma.getY() + 250 / 50);
+		if (Utilita.collisioniTetto(mDiRettangoli[0], testaAda)) {
+			if (saltoTimeline != null) {
+				tempoSalto = System.currentTimeMillis();
+				saltoTimeline.stop();
+				saltoTimeline = null;
+			}
+		}
+
+		if (nOggettiCollisione == 0 && saltoTimeline == null) {
+			adaFerma.setY(adaFerma.getY() + 210 / 50);
 			rettangoloAda.setY(adaFerma.getY() + adaFerma.getFitHeight() - 20);
+		}
+
+		if (Utilita.collisioniLava(lava, testaAda)) {
+			gameover = new GameOver(areaGioco, testoDialogo, gruppo);
 		}
 
 		if (!areaGioco.getId().equals("gioco2")) {
@@ -282,7 +300,7 @@ public class GiocoInterattivo {
 //			}
 
 			areaGioco.getChildren().addAll(mDiRettangoli[0]);
-			areaGioco.getChildren().add(testaAda);
+			areaGioco.getChildren().addAll(testaAda, lava, chest1, chest2);
 			areaGioco.setId("gioco2");
 			adaImageView.setFitWidth(150);
 			adaImageView.setFitHeight(150);
@@ -330,7 +348,7 @@ public class GiocoInterattivo {
 
 		// come far comparire
 
-		if (adaImageView.getX() > 5000000) { // TODO: da cambiare con l'avvenuta collisione
+		if (Utilita.collisioneChest(chest1, rettangoloAda, chest2) >0) {
 			if (domanda == null) {
 				// creiamo una copia di areaGioco
 				for (int i = 0; i < areaGioco.getChildren().size(); i++) {
@@ -361,13 +379,20 @@ public class GiocoInterattivo {
 				if (domanda.isRispostaGiusta() || System.currentTimeMillis() - timeDomande > 30000) {
 					nDomanda++;
 					domanda = null;
-					adaImageView.setX(10);
 					areaGioco.getChildren().clear();
 //	    			System.out.println("ritorno a gioco");
 //	    			System.out.println(schermataGioco.getChildren());
 					for (int i = 0; i < schermataGioco.getChildren().size(); i++) {
 						areaGioco.getChildren().add(schermataGioco.getChildren().get(i));
 					}
+					if (Utilita.collisioneChest(chest1, rettangoloAda, chest2) == 1) {
+						areaGioco.getChildren().remove(chest1);
+
+					} else if (Utilita.collisioneChest(chest1, rettangoloAda, chest2) == 2) {
+						areaGioco.getChildren().remove(chest2);
+
+					}
+
 //	    			System.out.println(areaGioco.getChildren());
 				}
 			}
