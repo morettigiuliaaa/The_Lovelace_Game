@@ -48,6 +48,6 @@ public class GameOver {
         
     }
     public void metodoDelPulsante() {
-		areaGioco.setId("MI FACCIO LE BAMBINE");
+		areaGioco.setId("nonEsisto");
     }
 }

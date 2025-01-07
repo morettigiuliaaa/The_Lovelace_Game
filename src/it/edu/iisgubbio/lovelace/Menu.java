@@ -55,7 +55,7 @@ public class Menu extends Application {
 
     RaccoltaTesti testoDialogo;
 
-    static double volume=1.0;
+    static double volume=0.0;
     
     public static Stage finestra;
     
@@ -67,6 +67,7 @@ public class Menu extends Application {
         testoDialogo = new RaccoltaTesti(Locale.ITALIAN);
     	
         // Riproduzione della musica di sottofondo
+    	audioClip.setVolume(volume);
         audioClip.setCycleCount(Animation.INDEFINITE);
         audioClip.play();
 
@@ -163,7 +164,7 @@ public class Menu extends Application {
 
     // Funzione per gestire le impostazioni (lingua e volume)
     public void impostazioni() {
-        Slider slideraudio = new Slider(0, 1, 1);
+        Slider slideraudio = new Slider(0, 1, Menu.volume);
         Group effetto = new Group();
         lingua.setId("tcss");
         audio.setId("tcss");

@@ -22,6 +22,9 @@
 #gioco2{
 	-fx-background-image: url("sfondo1.jpg");
 }
+#gioco3{
+	-fx-background-image: url("sfondo2.jpg");
+}
 #bottonedomanda{
 	-fx-background-color: rgb(128, 128, 128);
     -fx-text-fill: white;         

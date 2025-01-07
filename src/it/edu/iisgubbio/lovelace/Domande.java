@@ -14,12 +14,19 @@ public class Domande {
 		this.areaGioco = areaGioco;
 	}
 
+	private boolean rispostaData=false;
 	private boolean rispostaGiusta= false;
 	
-	public boolean isRispostaGiusta() {
-		boolean risposta=rispostaGiusta;
-		rispostaGiusta=false;
-		return risposta;
+	public int getRispostaGiusta() {
+		if(rispostaData) {
+			rispostaData=false;
+			int risposta=rispostaGiusta ? 1 : 0;
+			rispostaGiusta=false;
+			return risposta;
+		}else {
+			return -1;
+		}
+		
 	}
 
 	public void mostraDomanda1(RaccoltaTesti testoDialogo) {
@@ -82,6 +89,7 @@ public class Domande {
 
 	// Metodo per verificare la risposta
 	private void verificaRisposta1(String risposta) {
+		rispostaData=true;
 		String rispostaCorretta = "B"; // La risposta corretta per questa domanda
 		if (risposta.equals(rispostaCorretta)) {
 			System.out.println("risposta corretta");
@@ -153,6 +161,7 @@ public class Domande {
 
 	// Metodo per verificare la risposta
 	private void verificaRisposta2(String risposta) {
+		rispostaData=true;
 		String rispostaCorretta = "B"; // La risposta corretta per questa domanda
 		if (risposta.equals(rispostaCorretta)) {
 			System.out.println("risposta corretta");
@@ -223,6 +232,7 @@ public class Domande {
 
 	// Metodo per verificare la risposta
 	private void verificaRisposta3(String risposta) {
+		rispostaData=true;
 		String rispostaCorretta = "B"; // La risposta corretta per questa domanda
 		if (risposta.equals(rispostaCorretta)) {
 			System.out.println("risposta corretta");
@@ -294,6 +304,7 @@ public class Domande {
 
 	// Metodo per verificare la risposta
 	private void verificaRisposta4(String risposta) {
+		rispostaData=true;
 		String rispostaCorretta = "B"; // La risposta corretta per questa domanda
 		if (risposta.equals(rispostaCorretta)) {
 			System.out.println("risposta corretta");

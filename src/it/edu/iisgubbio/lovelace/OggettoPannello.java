@@ -58,6 +58,16 @@ public class OggettoPannello {
 		indexDialoghi=i;
 		oggettoPannello(testoDialogo.getString(dialogoImage[i].nomeDialogo), dialogoImage[i].immaginePersonaggio);
 	}
+	public OggettoPannello(String nomeTesto, Image personaggio){
+		voceAda.setVolume(Menu.volume);
+		voceAugusto.setVolume(Menu.volume);
+		strappo.setVolume(Menu.volume);
+		strappo.setCycleCount(1);
+		voceAda.setCycleCount(Animation.INDEFINITE);
+		voceAugusto.setCycleCount(Animation.INDEFINITE);
+		voceAugusto.setCycleCount(Animation.INDEFINITE);
+		oggettoPannello(testoDialogo.getString(nomeTesto), personaggio);
+	}
 	
 	public void oggettoPannello(String testo, Image personaggio) {
         // Crea la finestra con lo sfondo
@@ -88,8 +98,8 @@ public class OggettoPannello {
         finestra.setLayoutY(450);
         
         // Chiamare la funzione per l'effetto di scrittura
-        //showTypingEffect(dialogo, testo);
-        setStatoDiscorso(true);
+        showTypingEffect(dialogo, testo);
+        //setStatoDiscorso(true);
     }
 	
 
@@ -113,6 +123,7 @@ public class OggettoPannello {
                 index[0]++;  // Incrementa l'indice per il prossimo carattere
                 stato=false;
             }else {
+            	setStatoDiscorso(true);
             	stato=true;
             	voceAugusto.stop();
             	voceAda.stop();

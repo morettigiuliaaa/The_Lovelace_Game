@@ -1,11 +1,11 @@
 package it.edu.iisgubbio.lovelace;
 
-import it.edu.iisgubbio.lovelace.*;
 import it.edu.iisgubbio.lovelace.dynamicEffects.FadeOut;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,7 +13,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -21,30 +20,36 @@ import javafx.util.Duration;
 
 public class GiocoInterattivo {
 	GameOver gameover;
-	private boolean arrivatosù = false;
-	private boolean arrivatogiù = true;
 
 	private Scene scena;
 	private Pane areaGioco = new Pane();
 	private Timeline timelineGioco;
 
 	private Rectangle rettangolo = new Rectangle(250, 400);
-	private Rectangle rettangoloAda = new Rectangle(30, 413);
-	private Image adaImage = new Image(getClass().getResourceAsStream("ada_sx.png"));
-	private ImageView adaFerma = new ImageView(adaImage); // Immagine ferma
+	private Rectangle rettangoloAda = new Rectangle(40, 413);
+	private Image adaImageDx = new Image(getClass().getResourceAsStream("ada_dx.png"));
+	private Image adaImageSx = new Image(getClass().getResourceAsStream("ada_sx.png"));
+	private ImageView adaFerma = new ImageView(adaImageSx); // Immagine ferma
 
 	private int frameIndex = 0; // Indice frame corrente
-	private static final String[] FRAMES = { GiocoInterattivo.class.getResource("AdaFrame1.png").toExternalForm(),
+	private static final String[] FRAMES_SX = { 
+			GiocoInterattivo.class.getResource("AdaFrame1.png").toExternalForm(),
 			GiocoInterattivo.class.getResource("AdaFrame2.png").toExternalForm(),
 			GiocoInterattivo.class.getResource("AdaFrame3.png").toExternalForm(),
 			GiocoInterattivo.class.getResource("AdaFrame4.png").toExternalForm(),
 			GiocoInterattivo.class.getResource("AdaFrame5.png").toExternalForm(),
 			GiocoInterattivo.class.getResource("AdaFrame6.png").toExternalForm() };
+	private static final String[] FRAMES_DX = { 
+			GiocoInterattivo.class.getResource("AdaFrame1_dx.png").toExternalForm(),
+			GiocoInterattivo.class.getResource("AdaFrame2_dx.png").toExternalForm(),
+			GiocoInterattivo.class.getResource("AdaFrame3_dx.png").toExternalForm(),
+			GiocoInterattivo.class.getResource("AdaFrame4_dx.png").toExternalForm(),
+			GiocoInterattivo.class.getResource("AdaFrame5_dx.png").toExternalForm(),
+			GiocoInterattivo.class.getResource("AdaFrame6_dx.png").toExternalForm() };
 
 	private ImageView adaImageView = adaFerma;
 	int puntoInizioCorpoAda;
 	private Timeline movimentoTimeline; // Timeline per l'animazione
-	private boolean isMoving = false; // Indica se Ada è in movimento
 
 	public GiocoInterattivo(Scene scenaPrimaria, RaccoltaTesti testoDialogo) {
 		// Inizializzazione
@@ -62,51 +67,49 @@ public class GiocoInterattivo {
 	// Metodo per il movimento in avanti (animazione)
 	public void movimentoAdaAvanti(Pane areaGioco) {
 		if (adaImageView == null) {
-			adaImageView = new ImageView(new Image(FRAMES[0]));
+			adaImageView = new ImageView(new Image(FRAMES_SX[0]));
 			areaGioco.getChildren().add(adaImageView);
 		}
 		// Avvio dell'animazione in avanti
 		movimentoTimeline = new Timeline(new KeyFrame(Duration.millis(100), event -> {
-			frameIndex = (frameIndex + 1) % FRAMES.length; // Incrementa in modo ciclico
+			frameIndex = (frameIndex + 1) % FRAMES_SX.length; // Incrementa in modo ciclico
 			// limitiamo lo spostamento
 			if (adaFerma.getX() < Menu.LARGHEZZA_AREA_GIOCO - (puntoInizioCorpoAda + 50)) {
-				adaImageView.setImage(new Image(FRAMES[frameIndex]));
+				adaImageView.setImage(new Image(FRAMES_SX[frameIndex]));
 				if (avanti) {
 					adaFerma.setX(adaFerma.getX() + 20.0);
 					rettangoloAda.setX(adaFerma.getX() + puntoInizioCorpoAda + (adaFerma.getFitWidth() / 100) * 27);
 				} else {
-					adaImageView.setImage(adaImage);
+					adaImageView=adaFerma;
 				}
 			}
 		}));
 		movimentoTimeline.setCycleCount(Timeline.INDEFINITE);
 		movimentoTimeline.play();
-		isMoving = true; // Imposta stato in movimento
 	}
 
 	// Metodo per il movimento indietro (animazione)
 	public void movimentoAdaDietro(Pane areaGioco) {
 		if (adaImageView == null) {
-			adaImageView = new ImageView(new Image(FRAMES[5])); // Inizia dall'ultimo frame
+			adaImageView = new ImageView(new Image(FRAMES_DX[5])); // Inizia dall'ultimo frame
 			areaGioco.getChildren().add(adaImageView);
 		}
 
 		// Avvio dell'animazione indietro
 		movimentoTimeline = new Timeline(new KeyFrame(Duration.millis(100), event -> {
-			frameIndex = (frameIndex - 1 + FRAMES.length) % FRAMES.length; // Decrementa in modo ciclico
+			frameIndex = (frameIndex - 1 + FRAMES_DX.length) % FRAMES_DX.length; // Decrementa in modo ciclico
 			// limitiamo lo spostamento
 			if (adaFerma.getX() > -40 - puntoInizioCorpoAda) {
-				adaImageView.setImage(new Image(FRAMES[frameIndex]));
+				adaImageView.setImage(new Image(FRAMES_DX[frameIndex]));
 				adaFerma.setX(adaFerma.getX() - 20.0);
 				rettangoloAda.setX(adaFerma.getX() + puntoInizioCorpoAda + (adaFerma.getFitWidth() / 100) * 27);
 			} else {
-				adaImageView.setImage(adaImage);
+				adaImageView=adaFerma;
 			}
 		}));
 
 		movimentoTimeline.setCycleCount(Timeline.INDEFINITE);
 		movimentoTimeline.play();
-		isMoving = true; // Imposta stato in movimento
 	}
 
 	// Gestisce la pressione dei tasti
@@ -124,16 +127,12 @@ public class GiocoInterattivo {
 			}
 		}
 		if (evento.getCode() == KeyCode.W || evento.getCode() == KeyCode.UP) {
-			if (System.currentTimeMillis() - tempoSalto > 100
-					&& Utilita.collisioniRettangoli(mDiRettangoli[0], rettangoloAda) != 0) { // puoi ripetere il salto
-																								// 1Sec dopo la fine del
-																								// precedente
-				if (areaGioco.getId().equals("gioco2")) {
-					saltoAda(440); // Attiva il salto
-				} else if (areaGioco.getId().equals("gioco1")) {
-					saltoAda(140);
+			if (System.currentTimeMillis() - tempoSalto > 100) { // puoi ripetere il salto
+				if(areaGioco.getId().equals("gioco2") && Utilita.collisioniRettangoliScenaDue(mDiRettangoli[0], rettangoloAda) != 0) {
+					saltoAda();
+				}else if(areaGioco.getId().equals("gioco3") && Utilita.collisioniRettangoliScenaDue(mDiRettangoli[1], rettangoloAda) != 0){
+					saltoAda();
 				}
-
 			}
 
 		}
@@ -145,17 +144,21 @@ public class GiocoInterattivo {
 			if (movimentoTimeline != null) {
 				movimentoTimeline.stop();
 				movimentoTimeline = null;
-				adaImageView.setImage(adaImage);
+				if (areaGioco.getId().equals("gioco3")) {
+					adaImageView.setImage(adaImageDx);
+				}else{
+					adaImageView.setImage(adaImageSx);
+				}
+				
 			}
 		}
 	}
 
 	Timeline saltoTimeline;
-
 	/**
 	 * @param posizioneDaRaggiungere in che altezza il salto si deve fermare.
 	 */
-	private void saltoAda(int posizioneDaRaggiungere) {
+	private void saltoAda() {
 		if (saltoTimeline == null && !areaGioco.getId().equals("gioco1")) {
 			double altezzaSalto = 210.0;
 			saltoTimeline = new Timeline(
@@ -181,7 +184,6 @@ public class GiocoInterattivo {
 				saltoTimeline = null;
 //							}
 //						}));
-//				saltoTimeline.play();
 			});
 		}
 	}
@@ -223,56 +225,66 @@ public class GiocoInterattivo {
 			timelineGioco.stop();
 			timelineGioco.getKeyFrames().clear();
 			time = System.currentTimeMillis();
-			timelineGioco.getKeyFrames().add(new KeyFrame(Duration.millis(50), x -> scenauno(testoDialogo, gruppo)));
+			timelineGioco.getKeyFrames().add(new KeyFrame(Duration.millis(50), x -> scenaUno(testoDialogo, gruppo)));
 			timelineGioco.play();
 			gioco(gruppo);
 		}
 	}
 
-	public void scenauno(RaccoltaTesti testoDialogo, Group gruppo) {
+	public void scenaUno(RaccoltaTesti testoDialogo, Group gruppo) {
 		Shape intersezUno = Shape.intersect(rettangolo, rettangoloAda);
 		if (intersezUno.getBoundsInLocal().getWidth() != -1) {
-			scenadue(testoDialogo, gruppo);
+			scenaDue(testoDialogo, gruppo);
 		}
 	}
 
 	Rectangle testaAda = new Rectangle(25, 30);
-	Rectangle lava = new Rectangle(200, 60);
+	Rectangle lava = new Rectangle(250, 60);
 
-	Rectangle chest1 = Utilita.rettangolo(200, 250, 100, 100);
-	Rectangle chest2 = Utilita.rettangolo(460, 100, 100, 100);
+	Rectangle chest1 = Utilita.rettangolo(200, 250, 100, 110);
+	Rectangle chest2 = Utilita.rettangolo(460, 100, 100, 120);
+	Rectangle rettangoloPorta = Utilita.rettangolo(730, 150, 120, 270);
 
 	boolean avanti = true;
-	Domande domanda;
+	Domande domanda=null;
 	int nDomanda = 1;
 	long time;
 	long timeDomande; // tempo in millis nel quale è stata fatta la domanda
 	Pane schermataGioco = new Pane(); // variabile di appoggio per areaGioco
 	OggettoPannello dialogo; // per un dialogo
 	Group dialogoView; // per visualizzare un dialogo
-	Rectangle mDiRettangoli[][] = { { Utilita.rettangolo(6.5, 575, 190, 5), Utilita.rettangolo(335.5, 580, 90, 5),
-			Utilita.rettangolo(413, 530, 90, 70), Utilita.rettangolo(476, 470, 90, 70),
-			Utilita.rettangolo(556, 430, 90, 70), Utilita.rettangolo(636, 400, 280, 70),
-			Utilita.rettangolo(170, 350, 170, 20), Utilita.rettangolo(415, 180, 180, 30) }, {
+	Rectangle mDiRettangoli[][] = { 
+		{ 	Utilita.rettangolo(6.5, 575, 190, 20), 
+			Utilita.rettangolo(335.5, 580, 90, 5),
+			Utilita.rettangolo(413, 530, 90, 70), 
+			Utilita.rettangolo(476, 470, 90, 70),
+			Utilita.rettangolo(556, 430, 90, 70), 
+			Utilita.rettangolo(636, 400, 280, 70),
+			Utilita.rettangolo(170, 355, 170, 20), 
+			Utilita.rettangolo(415, 180, 180, 30) 
+		}, {
+			Utilita.rettangolo(0, 420, 175, 20), 
+			Utilita.rettangolo(240, 505, 130, 10),
+			Utilita.rettangolo(425, 470, 110, 10),
+			Utilita.rettangolo(565, 400, 110, 10),
+			Utilita.rettangolo(700, 400, 300, 30),
+		} 
+	};
 
-			} };
-
-	public void scenadue(RaccoltaTesti testoDialogo, Group gruppo) {
+	public void scenaDue(RaccoltaTesti testoDialogo, Group gruppo) {
 		testaAda.setX(rettangoloAda.getX() - 10);
 		testaAda.setY(rettangoloAda.getY() - adaFerma.getFitHeight() + 27);
 		testaAda.setFill(Color.BLUE);
-
 		lava.setFill(Color.rgb(1, 0, 0, 0.5));
-		lava.setX(180);
+		lava.setX(150);
 		lava.setY(600);
 		// System.out.println(rettangoloAda.getX()+" "+rettangoloAda.getY());
-		int nOggettiCollisione = Utilita.collisioniRettangoli(mDiRettangoli[0], rettangoloAda);
+		int nOggettiCollisione = Utilita.collisioniRettangoliScenaDue(mDiRettangoli[0], rettangoloAda);
 		if (nOggettiCollisione > 1) {
 			avanti = false;
 		} else {
 			avanti = true;
 		}
-
 		if (Utilita.collisioniTetto(mDiRettangoli[0], testaAda)) {
 			if (saltoTimeline != null) {
 				tempoSalto = System.currentTimeMillis();
@@ -280,27 +292,44 @@ public class GiocoInterattivo {
 				saltoTimeline = null;
 			}
 		}
-
 		if (nOggettiCollisione == 0 && saltoTimeline == null) {
-			adaFerma.setY(adaFerma.getY() + 210 / 50);
-			rettangoloAda.setY(adaFerma.getY() + adaFerma.getFitHeight() - 20);
+			adaFerma.setY(adaFerma.getY() + 210/50);
+			rettangoloAda.setY(adaFerma.getY() + adaFerma.getFitHeight() - 25);
 		}
-
 		if (Utilita.collisioniLava(lava, testaAda)) {
 			gameover = new GameOver(areaGioco, testoDialogo, gruppo);
 		}
+		if (Utilita.collisioniPorta(rettangoloPorta, rettangoloAda)) {
+			if(nDomanda>2) {
+				scenaTre(testoDialogo, gruppo);
+			}else {
+				if(dialogo==null) {
+					adaFerma.setX(40);
+					rettangoloAda.setX(adaFerma.getX() + puntoInizioCorpoAda);
+					double nC=(int)(Math.random()*2);
+					if(nC==1) {
+						dialogo = new OggettoPannello("notificaUscita1", adaImageSx);
+					}else {
+						dialogo = new OggettoPannello("notificaUscita2", adaImageSx);
+					}
+					dialogoView=dialogo.getFinestra();
+					areaGioco.getChildren().add(dialogoView);
+				}
+			}
+		}else {
+			if(dialogo!=null && dialogo.statoDiscorso()) {
+				System.out.println("rimosso");
+				areaGioco.getChildren().remove(dialogoView);
+				dialogo=null;
+			}
+		}
 
-		if (!areaGioco.getId().equals("gioco2")) {
+		if (!areaGioco.getId().equals("gioco2") && !areaGioco.getId().equals("gioco3")) {
 			areaGioco.getChildren().clear();
 			areaGioco.getChildren().add(gruppo);
 			(new FadeOut(gruppo, 1000)).start();
-//			for (int i = 0; i < Menu.LARGHEZZA_AREA_GIOCO; i += 25) {
-//				areaGioco.getChildren().add(new Line(i, 0, i, Menu.ALTEZZA_AREA_GIOCO));
-
-//			}
-
 			areaGioco.getChildren().addAll(mDiRettangoli[0]);
-			areaGioco.getChildren().addAll(testaAda, lava, chest1, chest2);
+			areaGioco.getChildren().addAll(testaAda, lava, chest1, chest2, rettangoloPorta);
 			areaGioco.setId("gioco2");
 			adaImageView.setFitWidth(150);
 			adaImageView.setFitHeight(150);
@@ -309,6 +338,8 @@ public class GiocoInterattivo {
 			puntoInizioCorpoAda = 36;
 			adaImageView.setX(40);
 			adaImageView.setY(440);
+			testaAda.setVisible(false);
+			lava.setVisible(false);
 			// TODO:
 			// rettangoli sotto le chest
 			// quadrati per la chest
@@ -323,14 +354,16 @@ public class GiocoInterattivo {
 			rettangoloAda.setHeight(10);
 			rettangoloAda.setX(adaFerma.getX() + puntoInizioCorpoAda);
 			rettangoloAda.setY(adaFerma.getY() + adaFerma.getFitHeight() - 20);
-			rettangoloAda.setVisible(true);
+			rettangoloAda.setVisible(false);
 			areaGioco.getChildren().add(rettangoloAda);
 			areaGioco.getChildren().add(adaImageView);
 			areaGioco.getChildren().remove(gruppo);
-
+			chest1.setY(250);
+			chest2.setY(100);
+			
 			timelineGioco.stop();
 			timelineGioco.getKeyFrames().clear();
-			timelineGioco.getKeyFrames().add(new KeyFrame(Duration.millis(10), x -> scenadue(testoDialogo, gruppo)));
+			timelineGioco.getKeyFrames().add(new KeyFrame(Duration.millis(10), x -> scenaDue(testoDialogo, gruppo)));
 			timelineGioco.play();
 		}
 //			//per far comparire un unico dialogo
@@ -346,56 +379,156 @@ public class GiocoInterattivo {
 //			dialogo=null;
 //		}
 
-		// come far comparire
-
-		if (Utilita.collisioneChest(chest1, rettangoloAda, chest2) >0) {
+		int nCollisioneChest=Utilita.collisioneChest(chest1, rettangoloAda, chest2);
+		if (nCollisioneChest>0) {
 			if (domanda == null) {
 				// creiamo una copia di areaGioco
-				for (int i = 0; i < areaGioco.getChildren().size(); i++) {
-					schermataGioco.getChildren().add(areaGioco.getChildren().get(i));
+				eseguiDomanda(testoDialogo);
+			} else {
+				int statoDomanda=domanda.getRispostaGiusta();
+				System.out.println(statoDomanda);
+				// controlliamo lo stato della risposta
+				if (statoDomanda==1) {
+					nDomanda++;
+					System.out.println(nDomanda);
+					domanda = null;
+					areaGioco.getChildren().clear();
+	    			System.out.println("ritorno a gioco");
+//	    			System.out.println(schermataGioco.getChildren());
+					if (nCollisioneChest== 1) {
+						chest1.setY(-200);
+						areaGioco.getChildren().remove(chest1);
+					} else if (nCollisioneChest== 2) {
+						chest2.setY(-200);
+						areaGioco.getChildren().remove(chest2);
+					}
+					int dimensionePane=schermataGioco.getChildren().size();
+					for (int i = dimensionePane-1; i >= 0; i--) {
+						Node primo=schermataGioco.getChildren().get(i);
+						areaGioco.getChildren().add(primo);
+					}
+//	    			System.out.println(areaGioco.getChildren());
+				}else if(System.currentTimeMillis() - timeDomande > 30000 || statoDomanda==0){
+					adaImageView.setX(10);
+					chest2.setY(-200);
+					chest1.setY(-200);
+					domanda=null;
+					gameover = new GameOver(areaGioco, testoDialogo, gruppo);
 				}
-				switch (nDomanda) {
-				case 1:
-					domanda = domanda1(testoDialogo);
-					break;
-				case 2:
-					domanda = domanda2(testoDialogo);
-					break;
-				case 3:
-					domanda = domanda3(testoDialogo);
-					break;
-				case 4:
-					domanda = domanda4(testoDialogo);
-					break;
-				default:
-					// finite le domande è finito anche il gioco
-					System.out.println("completato");
-					completato = true;
-					timelineGioco.stop();
-				}
-				timeDomande = System.currentTimeMillis();
+			}
+		}
+	}
+	
+	private void eseguiDomanda(RaccoltaTesti testoDialogo) {
+		int dimensionePane=areaGioco.getChildren().size();
+		for (int i = dimensionePane-1; i >= 0; i--) {
+			Node primo=areaGioco.getChildren().getFirst();
+			schermataGioco.getChildren().add(primo);
+		}
+		switch (nDomanda) {
+		case 1:
+			domanda = domanda1(testoDialogo);
+			break;
+		case 2:
+			domanda = domanda2(testoDialogo);
+			break;
+		case 3:
+			domanda = domanda3(testoDialogo);
+			break;
+		case 4:
+			domanda = domanda4(testoDialogo);
+			break;
+		default:
+			// finite le domande è finito anche il gioco
+			System.out.println("completato");
+			completato = true;
+			timelineGioco.stop();
+		}
+		timeDomande = System.currentTimeMillis();
+	}
+	
+	public void scenaTre(RaccoltaTesti testoDialogo, Group gruppo) {
+		int nOggettiCollisione = Utilita.collisioniRettangoliScenaTre(mDiRettangoli[1], rettangoloAda);
+		if (nOggettiCollisione > 1) {
+			System.out.println("piu di una");
+			avanti = false;
+		} else {
+			avanti = true;
+		}
+		if (nOggettiCollisione == 0 && saltoTimeline == null) {
+			adaFerma.setY(adaFerma.getY() + 210/50);
+			rettangoloAda.setY(adaFerma.getY() + adaFerma.getFitHeight() - 25);
+		}
+		if (Utilita.collisioniLava(lava, testaAda)) {
+			gameover = new GameOver(areaGioco, testoDialogo, gruppo);
+		}
+		if (Utilita.collisioniPorta(rettangoloPorta, rettangoloAda)) {
+			if (domanda == null) {
+				// creiamo una copia di areaGioco
+				eseguiDomanda(testoDialogo);
 			} else {
 				// controlliamo lo stato della risposta
-				if (domanda.isRispostaGiusta() || System.currentTimeMillis() - timeDomande > 30000) {
+
+				int statoDomanda=domanda.getRispostaGiusta();
+				if (statoDomanda==1) {
 					nDomanda++;
 					domanda = null;
 					areaGioco.getChildren().clear();
-//	    			System.out.println("ritorno a gioco");
+	    			System.out.println("ritorno a gioco");
 //	    			System.out.println(schermataGioco.getChildren());
-					for (int i = 0; i < schermataGioco.getChildren().size(); i++) {
-						areaGioco.getChildren().add(schermataGioco.getChildren().get(i));
+					int dimensionePane=schermataGioco.getChildren().size();
+					for (int i = dimensionePane-1; i >= 0; i--) {
+						Node primo=schermataGioco.getChildren().get(i);
+						areaGioco.getChildren().add(primo);
 					}
-					if (Utilita.collisioneChest(chest1, rettangoloAda, chest2) == 1) {
-						areaGioco.getChildren().remove(chest1);
-
-					} else if (Utilita.collisioneChest(chest1, rettangoloAda, chest2) == 2) {
-						areaGioco.getChildren().remove(chest2);
-
-					}
-
-//	    			System.out.println(areaGioco.getChildren());
-				}
+				}else if(System.currentTimeMillis() - timeDomande > 30000 || statoDomanda==0){
+					gameover = new GameOver(areaGioco, testoDialogo, gruppo);
 			}
+			}
+		}
+		testaAda.setX(rettangoloAda.getX() - 10);
+		testaAda.setY(rettangoloAda.getY() - adaFerma.getFitHeight() + 27);
+		if (!areaGioco.getId().equals("gioco3")) {
+			System.out.println("sono nellif");
+			areaGioco.getChildren().clear();
+			areaGioco.getChildren().add(gruppo);
+			(new FadeOut(gruppo, 1000)).start();
+			areaGioco.setId("gioco3");
+			adaImageView.setFitWidth(150);
+			adaImageView.setFitHeight(150);
+			adaFerma.setFitWidth(150);
+			adaFerma.setFitHeight(150);
+			adaFerma.setImage(adaImageDx);
+			puntoInizioCorpoAda = 36;
+			adaImageView.setX(Menu.LARGHEZZA_AREA_GIOCO-180);
+			adaImageView.setY(3);
+			rettangoloAda.setFill(Color.ALICEBLUE);
+			rettangoloAda.setWidth(30);
+			rettangoloAda.setHeight(10);
+			rettangoloAda.setX(adaFerma.getX() + puntoInizioCorpoAda);
+			rettangoloAda.setY(adaFerma.getY() + adaFerma.getFitHeight() - 20);
+			rettangoloAda.setVisible(true);
+			areaGioco.getChildren().add(rettangoloAda);
+			areaGioco.getChildren().add(adaImageView);
+			areaGioco.getChildren().remove(gruppo);
+			
+			lava.setY(Menu.ALTEZZA_AREA_GIOCO-40);
+			lava.setX(0);
+			lava.setWidth(Menu.LARGHEZZA_AREA_GIOCO);
+
+			testaAda.setVisible(false);
+			lava.setVisible(false);
+			rettangoloAda.setVisible(false);
+			
+			rettangoloPorta.setX(20);
+			rettangoloPorta.setY(175);
+			areaGioco.getChildren().addAll(mDiRettangoli[1]);
+			areaGioco.getChildren().addAll(rettangoloPorta, testaAda, lava);
+			
+			timelineGioco.stop();
+			timelineGioco.getKeyFrames().clear();
+			timelineGioco.getKeyFrames().add(new KeyFrame(Duration.millis(10), x -> scenaTre(testoDialogo, gruppo)));
+			timelineGioco.play();
 		}
 	}
 
@@ -421,10 +554,10 @@ public class GiocoInterattivo {
 		// posizionamento rettangolo collisione
 		rettangoloAda.setX(adaFerma.getX() + adaFerma.getFitWidth() - 220);
 		rettangoloAda.setY(adaFerma.getY() + 40);
-		rettangoloAda.setVisible(true);
+		rettangoloAda.setVisible(false);
 		rettangolo.setY(125);
 		rettangolo.setX(550);
-		rettangolo.setVisible(true);
+		rettangolo.setVisible(false);
 		areaGioco.getChildren().add(rettangoloAda);
 		// adaImageView.toFront();
 	}
