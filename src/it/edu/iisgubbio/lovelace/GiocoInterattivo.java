@@ -309,9 +309,9 @@ public class GiocoInterattivo {
 					rettangoloAda.setX(adaFerma.getX() + puntoInizioCorpoAda);
 					double nC=(int)(Math.random()*2);
 					if(nC==1) {
-						dialogo = new OggettoPannello("notificaUscita1", adaImageSx);
+						dialogo = new OggettoPannello("notificaUscita1", adaImageSx ,areaGioco);
 					}else {
-						dialogo = new OggettoPannello("notificaUscita2", adaImageSx);
+						dialogo = new OggettoPannello("notificaUscita2", adaImageSx, areaGioco);
 					}
 					dialogoView=dialogo.getFinestra();
 					areaGioco.getChildren().add(dialogoView);
