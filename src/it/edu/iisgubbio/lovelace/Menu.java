@@ -55,7 +55,7 @@ public class Menu extends Application {
 
     RaccoltaTesti testoDialogo;
 
-    static double volume=0.0;
+    static double volume=0.5;
     
     public static Stage finestra;
     

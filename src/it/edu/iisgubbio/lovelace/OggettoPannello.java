@@ -33,6 +33,11 @@ public class OggettoPannello {
     		new DialogoImmagine("dialogo2Augusto", augustoImage),
     		new DialogoImmagine("dialogo3Augusto", augustoImage),
     		new DialogoImmagine("dialogo4Ada", adaImage),
+    		new DialogoImmagine("finale1ada", adaImage),
+    		new DialogoImmagine("finale1augusto", augustoImage),
+    		new DialogoImmagine("finale2ada", adaImage),
+    		new DialogoImmagine("finale2augusto", augustoImage),
+    		new DialogoImmagine("finale3ada", adaImage),
     };
     
     private boolean stato; //indica se l'animazione del testo è finita o no

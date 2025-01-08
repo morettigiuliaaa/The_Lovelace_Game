@@ -71,7 +71,7 @@ public class Start{
 			if(!giocoInterattivo) {
 				nDialogo++;
 				//il 7 corrisponde al numero dei dialoghi della prima parte
-				if(nDialogo==1 && !completato) {
+				if(nDialogo==7 && !completato) {
 					giocoInterattivo=true;
 				}
 			}
@@ -80,7 +80,7 @@ public class Start{
 					// Creazione del rettangolo di transizione
 					Rectangle rettangolo = new Rectangle(Menu.LARGHEZZA_AREA_GIOCO, Menu.ALTEZZA_AREA_GIOCO);
 					rettangolo.setFill(Color.BLACK);
-					Group gruppo = new Group(rettangolo);
+					gruppo = new Group(rettangolo);
 					areaGioco.getChildren().add(gruppo);
 					transizione=false;
 					(new FadeIn(gruppo, 3000)).start();
@@ -89,6 +89,8 @@ public class Start{
 				}
 				completato=gioco.isCompletato();
 				if(completato) {
+					areaGioco.setId("dialogo");
+					start(gruppo);
 					giocoInterattivo=false;
 					nDialogo--;
 				}
@@ -144,12 +146,7 @@ public class Start{
         
 		dialogo=new OggettoPannello(nDialogo);
 		areaGioco.getChildren().add(dialogo.getFinestra());
-		
-		
-		
-//      TODO: AUGUSTO E' DA RIMPICCIOLIRE
     }
-	
 	
 	private void cambiaDialogo() {
 		try {

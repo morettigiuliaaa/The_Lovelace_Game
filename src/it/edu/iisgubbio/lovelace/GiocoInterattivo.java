@@ -297,6 +297,7 @@ public class GiocoInterattivo {
 			rettangoloAda.setY(adaFerma.getY() + adaFerma.getFitHeight() - 25);
 		}
 		if (Utilita.collisioniLava(lava, testaAda)) {
+			domanda = null;
 			gameover = new GameOver(areaGioco, testoDialogo, gruppo);
 		}
 		if (Utilita.collisioniPorta(rettangoloPorta, rettangoloAda)) {
@@ -325,6 +326,7 @@ public class GiocoInterattivo {
 		}
 
 		if (!areaGioco.getId().equals("gioco2") && !areaGioco.getId().equals("gioco3")) {
+			nDomanda=1;
 			areaGioco.getChildren().clear();
 			areaGioco.getChildren().add(gruppo);
 			(new FadeOut(gruppo, 1000)).start();
@@ -460,10 +462,13 @@ public class GiocoInterattivo {
 			rettangoloAda.setY(adaFerma.getY() + adaFerma.getFitHeight() - 25);
 		}
 		if (Utilita.collisioniLava(lava, testaAda)) {
+			domanda = null;
 			gameover = new GameOver(areaGioco, testoDialogo, gruppo);
 		}
 		if (Utilita.collisioniPorta(rettangoloPorta, rettangoloAda)) {
 			if (domanda == null) {
+				System.out.println("primo if");
+
 				// creiamo una copia di areaGioco
 				eseguiDomanda(testoDialogo);
 			} else {
@@ -471,6 +476,7 @@ public class GiocoInterattivo {
 
 				int statoDomanda=domanda.getRispostaGiusta();
 				if (statoDomanda==1) {
+					System.out.println("secondo if");
 					nDomanda++;
 					domanda = null;
 					areaGioco.getChildren().clear();
@@ -482,14 +488,20 @@ public class GiocoInterattivo {
 						areaGioco.getChildren().add(primo);
 					}
 				}else if(System.currentTimeMillis() - timeDomande > 30000 || statoDomanda==0){
+					domanda = null;
+					rettangoloPorta.setY(-500);
 					gameover = new GameOver(areaGioco, testoDialogo, gruppo);
-			}
+					areaGioco.getChildren().remove(rettangoloPorta);
+
+				}
 			}
 		}
 		testaAda.setX(rettangoloAda.getX() - 10);
 		testaAda.setY(rettangoloAda.getY() - adaFerma.getFitHeight() + 27);
 		if (!areaGioco.getId().equals("gioco3")) {
-			System.out.println("sono nellif");
+			nDomanda=3;
+			domanda = null;
+//			System.out.println("sono nellif");
 			areaGioco.getChildren().clear();
 			areaGioco.getChildren().add(gruppo);
 			(new FadeOut(gruppo, 1000)).start();
