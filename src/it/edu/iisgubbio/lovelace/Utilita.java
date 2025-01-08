@@ -10,7 +10,7 @@ public class Utilita {
 		Rectangle r = new Rectangle(w,h);
 		r.setX(x);
 		r.setY(y);
-		Color z = new Color(1, 0, 0, 0.0);
+		Color z = new Color(1, 0, 0, 0.5);
 		r.setFill( z );
 		return r;
 	}

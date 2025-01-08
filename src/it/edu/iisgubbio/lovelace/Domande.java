@@ -162,7 +162,7 @@ public class Domande {
 	// Metodo per verificare la risposta
 	private void verificaRisposta2(String risposta) {
 		rispostaData=true;
-		String rispostaCorretta = "B"; // La risposta corretta per questa domanda
+		String rispostaCorretta = "C"; // La risposta corretta per questa domanda
 		if (risposta.equals(rispostaCorretta)) {
 			System.out.println("risposta corretta");
 			rispostaGiusta=true;
@@ -233,7 +233,7 @@ public class Domande {
 	// Metodo per verificare la risposta
 	private void verificaRisposta3(String risposta) {
 		rispostaData=true;
-		String rispostaCorretta = "B"; // La risposta corretta per questa domanda
+		String rispostaCorretta = "A"; // La risposta corretta per questa domanda
 		if (risposta.equals(rispostaCorretta)) {
 			System.out.println("risposta corretta");
 			rispostaGiusta=true;
@@ -305,7 +305,7 @@ public class Domande {
 	// Metodo per verificare la risposta
 	private void verificaRisposta4(String risposta) {
 		rispostaData=true;
-		String rispostaCorretta = "B"; // La risposta corretta per questa domanda
+		String rispostaCorretta = "D"; // La risposta corretta per questa domanda
 		if (risposta.equals(rispostaCorretta)) {
 			System.out.println("risposta corretta");
 			rispostaGiusta=true;

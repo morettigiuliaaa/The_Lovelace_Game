@@ -93,6 +93,11 @@
 	-fx-font-family: Minecraft;
 	-fx-font-size: 60
 }
+#titoloEnd {
+	-fx-text-fill: yellow;
+	-fx-font-family: Minecraft;
+	-fx-font-size: 30
+}
 
 #slider{
 	-fx-color: rgb(132, 16, 153);

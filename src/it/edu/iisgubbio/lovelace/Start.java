@@ -95,7 +95,6 @@ public class Start{
 					areaGioco.setId("dialogo");
 					start(gruppo);
 					giocoInterattivo=false;
-					nDialogo--;
 				}
 			}else {
 				try{
@@ -105,12 +104,17 @@ public class Start{
 				}catch (ArrayIndexOutOfBoundsException e) {
 					//Dialoghi terminati
 					System.out.println("Dialoghi terminati");
+					scena.setOnKeyPressed(event -> {});
 					timelineGioco.stop();
+					areaGioco.getChildren().removeLast();
+					(new FadeIn(gruppo, 1000)).start();
+					new End(testoDialogo, gruppo);
 				}
 			}
 		}
 	}
 
+	
 	private void cambioScena() {
 		int nElemnti=areaGioco.getChildren().size();
 		//prendo lultimo elemento aggiunto alla lista

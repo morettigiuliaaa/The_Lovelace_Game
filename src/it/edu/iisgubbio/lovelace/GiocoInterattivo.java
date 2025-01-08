@@ -13,7 +13,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
@@ -87,9 +86,11 @@ public class GiocoInterattivo {
 		movimentoTimeline.setCycleCount(Timeline.INDEFINITE);
 		movimentoTimeline.play();
 	}
-
+	
+	boolean movimentoDietro=false;
 	// Metodo per il movimento indietro (animazione)
 	public void movimentoAdaDietro(Pane areaGioco) {
+		movimentoDietro=true;
 		if (adaImageView == null) {
 			adaImageView = new ImageView(new Image(FRAMES_DX[5])); // Inizia dall'ultimo frame
 			areaGioco.getChildren().add(adaImageView);
@@ -144,8 +145,10 @@ public class GiocoInterattivo {
 			if (movimentoTimeline != null) {
 				movimentoTimeline.stop();
 				movimentoTimeline = null;
-				if (areaGioco.getId().equals("gioco3")) {
+				
+				if (movimentoDietro) {
 					adaImageView.setImage(adaImageDx);
+					movimentoDietro=false;
 				}else{
 					adaImageView.setImage(adaImageSx);
 				}
@@ -160,7 +163,7 @@ public class GiocoInterattivo {
 	 */
 	private void saltoAda() {
 		if (saltoTimeline == null && !areaGioco.getId().equals("gioco1")) {
-			double altezzaSalto = 210.0;
+			double altezzaSalto = 220.0;
 			saltoTimeline = new Timeline(
 					// Salita
 					new KeyFrame(Duration.millis(9), event -> {
@@ -241,7 +244,7 @@ public class GiocoInterattivo {
 	Rectangle testaAda = new Rectangle(25, 30);
 	Rectangle lava = new Rectangle(250, 60);
 
-	Rectangle chest1 = Utilita.rettangolo(200, 250, 100, 110);
+	Rectangle chest1 = Utilita.rettangolo(200, 260, 100, 110);
 	Rectangle chest2 = Utilita.rettangolo(460, 100, 100, 120);
 	Rectangle rettangoloPorta = Utilita.rettangolo(730, 150, 120, 270);
 
@@ -328,6 +331,7 @@ public class GiocoInterattivo {
 		}
 
 		if (!areaGioco.getId().equals("gioco2") && !areaGioco.getId().equals("gioco3")) {
+			movimentoDietro=false;
 			nDomanda=1;
 			areaGioco.getChildren().clear();
 			areaGioco.getChildren().add(gruppo);
@@ -500,6 +504,7 @@ public class GiocoInterattivo {
 		testaAda.setX(rettangoloAda.getX() - 10);
 		testaAda.setY(rettangoloAda.getY() - adaFerma.getFitHeight() + 27);
 		if (!areaGioco.getId().equals("gioco3")) {
+			movimentoDietro=true;
 			nDomanda=3;
 			domanda = null;
 //			System.out.println("sono nellif");
@@ -514,7 +519,7 @@ public class GiocoInterattivo {
 			adaFerma.setImage(adaImageDx);
 			puntoInizioCorpoAda = 36;
 			adaImageView.setX(Menu.LARGHEZZA_AREA_GIOCO-180);
-			adaImageView.setY(3);
+			adaImageView.setY(400-adaFerma.getFitHeight());
 			rettangoloAda.setFill(Color.ALICEBLUE);
 			rettangoloAda.setWidth(30);
 			rettangoloAda.setHeight(10);

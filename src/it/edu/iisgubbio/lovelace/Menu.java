@@ -17,7 +17,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.util.Locale;
 
 import it.edu.iisgubbio.lovelace.dynamicEffects.*;
@@ -258,8 +257,8 @@ public class Menu extends Application {
         (new FadeIn(gruppo, 2000)).start();
 
         // Avvio del gioco
-        @SuppressWarnings("unused")
-        Start gioco = new Start(finestra, scena, testoDialogo);
+        new Start(finestra, scena, testoDialogo);
+//        new End(testoDialogo, gruppo);
     }
 
     // Funzione per uscire dal gioco
