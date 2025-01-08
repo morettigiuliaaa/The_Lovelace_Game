@@ -4,6 +4,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,11 +14,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 public class OggettoPannello {
-    Group finestra = new Group();
-    TextArea testo;
+    Group dialogoView = new Group();
+    TextArea textAreaDialogo;
     Image augustoImage = new Image(getClass().getResourceAsStream("augusto.png"));
     Image adaImage = new Image(getClass().getResourceAsStream("ada_sx.png"));
     String nomDialogo;
@@ -27,6 +29,8 @@ public class OggettoPannello {
     Pane areaGioco;
 	int indexDialoghi=0;
 	Timeline timeline;
+	static boolean manuale=false;
+	long tempoFine=0;
     //testi
     private DialogoImmagine[] dialogoImage={
     		new DialogoImmagine("dialogo1Ada", adaImage),
@@ -36,11 +40,11 @@ public class OggettoPannello {
     		new DialogoImmagine("dialogo2Augusto", augustoImage),
     		new DialogoImmagine("dialogo3Augusto", augustoImage),
     		new DialogoImmagine("dialogo4Ada", adaImage),
-    		new DialogoImmagine("finale1ada", adaImage),
-    		new DialogoImmagine("finale1augusto", augustoImage),
-    		new DialogoImmagine("finale2ada", adaImage),
-    		new DialogoImmagine("finale2augusto", augustoImage),
-    		new DialogoImmagine("finale3ada", adaImage),
+    		new DialogoImmagine("finale1Ada", adaImage),
+    		new DialogoImmagine("finale1Augusto", augustoImage),
+    		new DialogoImmagine("finale2Ada", adaImage),
+    		new DialogoImmagine("finale2Augusto", augustoImage),
+    		new DialogoImmagine("finale3Ada", adaImage),
     };
     
     private boolean stato; //indica se l'animazione del testo è finita o no
@@ -55,7 +59,8 @@ public class OggettoPannello {
      * costruttore che attraverso il numero dato in ingresso prende il testo e l'immagine del vettore dialogoImage
      * @param i è l'indice del vettore che contiene il testo interessato
      */
-	public OggettoPannello(int i){
+	public OggettoPannello(int i,Scene scena){
+		scena.setOnKeyPressed(e ->skip(e));
 		voceAda.setVolume(Menu.volume);
 		voceAugusto.setVolume(Menu.volume);
 		strappo.setVolume(Menu.volume);
@@ -68,10 +73,11 @@ public class OggettoPannello {
 		oggettoPannello(testoDialogo.getString(dialogoImage[i].nomeDialogo), dialogoImage[i].immaginePersonaggio);
 		
 	}
-	public OggettoPannello(String nomeTesto, Image personaggio , Pane areaGioco){
-		areaGioco.setOnKeyPressed(e -> skip(e));
-	
-
+	public OggettoPannello(String nomeTesto, Image personaggio, Scene scena){
+		System.out.println("cos2 scena: " + Menu.finestra.getScene() + scena);
+		System.out.println("prima"+scena.getOnKeyPressed());
+		scena.setOnKeyPressed(e -> skip(e));
+		System.out.println("dopo"+scena.getOnKeyPressed());
 		voceAda.setVolume(Menu.volume);
 		voceAugusto.setVolume(Menu.volume);
 		strappo.setVolume(Menu.volume);
@@ -84,15 +90,20 @@ public class OggettoPannello {
 	}
 	
 	public void skip(KeyEvent e) {
+		System.out.println("rilevata digitazione");
 		System.out.println(e.getCode());
 		if(e.getCode() ==  KeyCode.SPACE ) {
-			if(testo.getText().length()<testoDialogo.getString(nomDialogo).length()) {
+			if(textAreaDialogo.getText().length()<testoDialogo.getString(nomDialogo).length()) {
 				System.out.println("completa dialogo");
-				testo.setText(testoDialogo.getString(nomDialogo));
+				textAreaDialogo.setText(testoDialogo.getString(nomDialogo));
 				timeline.stop();
+            	voceAugusto.stop();
+            	voceAda.stop();
+            	strappo.stop();
 			}else {
 				System.out.println("salta dialogo");
-				setStatoDiscorso(true);
+				manuale=true;
+				stato=true;
 			}
 		}
 	}
@@ -111,29 +122,31 @@ public class OggettoPannello {
         
         // Crea la TextArea per il dialogo
         TextArea dialogo = new TextArea();
+        dialogo.setFocusTraversable(false);
         dialogo.setStyle("-fx-font-size: 18px;");
         dialogo.setPrefHeight(170); // Imposta un'altezza preferita
         dialogo.setPrefWidth(500);  // Imposta una larghezza preferita
         dialogo.setLayoutX(250);
         dialogo.setLayoutY(30);
         dialogo.setWrapText(true);
-        dialogo.setEditable(false); // Impedisce la modifica diretta del testo
+        dialogo.setEditable(false);
         
         // Aggiungi tutto alla finestra
-        finestra.getChildren().add(sfondo);
-        finestra.getChildren().add(dialogo);
-        finestra.getChildren().add(imgPersonaggio);
-        finestra.setLayoutY(450);
+        dialogoView.getChildren().add(sfondo);
+        dialogoView.getChildren().add(dialogo);
+        dialogoView.getChildren().add(imgPersonaggio);
+        dialogoView.setLayoutY(450);
         
         // Chiamare la funzione per l'effetto di scrittura
         showTypingEffect(dialogo, testo);
-        //setStatoDiscorso(true);
+//        setStatoDiscorso(true);
     }
 	
 
 	// Funzione per gestire l'effetto di scrittura
     private void showTypingEffect(TextArea dialogo, String testoDialogo) {
-    	testo=dialogo;
+    	manuale=false;
+    	textAreaDialogo=dialogo;
         timeline = new Timeline();
         final StringBuilder textBuilder = new StringBuilder();
         final int[] index = {0};  // Indice per tenere traccia della posizione nel testo
@@ -152,6 +165,7 @@ public class OggettoPannello {
                 index[0]++;  // Incrementa l'indice per il prossimo carattere
                 stato=false;
             }else {
+            	tempoFine=System.currentTimeMillis();
             	stato=true;
             	voceAugusto.stop();
             	voceAda.stop();
@@ -179,6 +193,6 @@ public class OggettoPannello {
     
     // Metodo per ottenere la finestra
     public Group getFinestra() {
-        return finestra;
+        return dialogoView;
     }
 }

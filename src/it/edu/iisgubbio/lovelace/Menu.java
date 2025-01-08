@@ -92,12 +92,15 @@ public class Menu extends Application {
 
         bInizio.setLayoutX(342);
         bInizio.setLayoutY(250);
+        bInizio.setFocusTraversable(false);
 
         bImpostazioni.setLayoutX(342);
         bImpostazioni.setLayoutY(310);
+        bImpostazioni.setFocusTraversable(false);
 
         bEsci.setLayoutX(342);
         bEsci.setLayoutY(373);
+        bEsci.setFocusTraversable(false);
 
         bInizio.setPrefWidth(200);
         bImpostazioni.setPrefWidth(200);
@@ -245,7 +248,8 @@ public class Menu extends Application {
     // Funzione per iniziare il gioco
     public void inizioGioco(Stage finestra, Scene scena) {
         audioClip.stop();
-
+        
+        
         // Creazione del rettangolo di transizione
         Rectangle rettangolo = new Rectangle(LARGHEZZA_AREA_GIOCO, ALTEZZA_AREA_GIOCO);
         rettangolo.setFill(Color.BLACK);

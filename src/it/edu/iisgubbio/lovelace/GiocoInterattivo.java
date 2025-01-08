@@ -309,19 +309,21 @@ public class GiocoInterattivo {
 					rettangoloAda.setX(adaFerma.getX() + puntoInizioCorpoAda);
 					double nC=(int)(Math.random()*2);
 					if(nC==1) {
-						dialogo = new OggettoPannello("notificaUscita1", adaImageSx ,areaGioco);
+						dialogo = new OggettoPannello("notificaUscita1", adaImageSx, scena);
 					}else {
-						dialogo = new OggettoPannello("notificaUscita2", adaImageSx, areaGioco);
+						dialogo = new OggettoPannello("notificaUscita2", adaImageSx, scena);
 					}
 					dialogoView=dialogo.getFinestra();
 					areaGioco.getChildren().add(dialogoView);
 				}
 			}
 		}else {
-			if(dialogo!=null && dialogo.statoDiscorso()) {
+			if(dialogo!=null && dialogo.statoDiscorso() && dialogo.tempoFine>1000 || OggettoPannello.manuale) {
 				System.out.println("rimosso");
 				areaGioco.getChildren().remove(dialogoView);
+				scena.setOnKeyPressed(e -> pigiato(e));
 				dialogo=null;
+				OggettoPannello.manuale=false;
 			}
 		}
 
@@ -388,7 +390,6 @@ public class GiocoInterattivo {
 				eseguiDomanda(testoDialogo);
 			} else {
 				int statoDomanda=domanda.getRispostaGiusta();
-				System.out.println(statoDomanda);
 				// controlliamo lo stato della risposta
 				if (statoDomanda==1) {
 					nDomanda++;

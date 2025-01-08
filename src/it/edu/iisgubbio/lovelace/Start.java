@@ -46,6 +46,7 @@ public class Start{
 		suonoIniziale.setVolume(Menu.volume);
 		suonoIniziale.play();
 		scena=scenaPrimaria;
+		scena.setOnKeyPressed(e -> {System.out.println("start");});
 		areaGioco=(Pane)scena.getRoot();
 		finestra.setScene(scena);
 		timelineGioco=new Timeline(new KeyFrame(
@@ -60,14 +61,16 @@ public class Start{
 	boolean transizione=true; //inidica se bisogna fare la transizione
 	Group gruppo;
 	GiocoInterattivo gioco;
-	
-
 	private void loop() {
 		if(!dialogo.statoDiscorso()) {
 			//aggiorniamo il tempo fino a quando non si interrompe l'animazione
 			tempoCambioDialogo=System.currentTimeMillis();
 		}
-		if(System.currentTimeMillis()-tempoCambioDialogo>1990 && dialogo.statoDiscorso() || giocoInterattivo) {
+		if(dialogo.textAreaDialogo!=null && dialogo.textAreaDialogo.isFocused()) {
+			adaferma.requestFocus();
+		}
+		
+		if(System.currentTimeMillis()-tempoCambioDialogo>1990 && dialogo.statoDiscorso() || giocoInterattivo || OggettoPannello.manuale) {
 			if(!giocoInterattivo) {
 				nDialogo++;
 				//il 7 corrisponde al numero dei dialoghi della prima parte
@@ -96,7 +99,7 @@ public class Start{
 				}
 			}else {
 				try{
-					dialogo=new OggettoPannello(nDialogo);
+					dialogo=new OggettoPannello(nDialogo, scena);
 					System.out.println("cambio dialogo");
 					cambiaDialogo();
 				}catch (ArrayIndexOutOfBoundsException e) {
@@ -144,7 +147,7 @@ public class Start{
         areaGioco.getChildren().add(gruppo);
         (new FadeOut(gruppo, 2000)).start();
         
-		dialogo=new OggettoPannello(nDialogo);
+		dialogo=new OggettoPannello(nDialogo, scena);
 		areaGioco.getChildren().add(dialogo.getFinestra());
     }
 	
@@ -153,7 +156,6 @@ public class Start{
 			areaGioco.getChildren().remove(areaGioco.getChildren().size()-1);
 		}catch (IndexOutOfBoundsException e) {
 		}
-		
 		areaGioco.getChildren().add(dialogo.getFinestra());
 	}
 }
