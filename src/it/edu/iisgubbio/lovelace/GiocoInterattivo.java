@@ -31,6 +31,8 @@ public class GiocoInterattivo {
 	private ImageView adaFerma = new ImageView(adaImageSx); // Immagine ferma
 
 	private int frameIndex = 0; // Indice frame corrente
+	
+	NumeriPergamene pergamena=new NumeriPergamene();
 	private static final String[] FRAMES_SX = { 
 			GiocoInterattivo.class.getResource("AdaFrame1.png").toExternalForm(),
 			GiocoInterattivo.class.getResource("AdaFrame2.png").toExternalForm(),
@@ -275,6 +277,8 @@ public class GiocoInterattivo {
 	};
 
 	public void scenaDue(RaccoltaTesti testoDialogo, Group gruppo) {
+		areaGioco.getChildren().remove(pergamena.getView());
+		areaGioco.getChildren().add(pergamena.getView());
 		testaAda.setX(rettangoloAda.getX() - 10);
 		testaAda.setY(rettangoloAda.getY() - adaFerma.getFitHeight() + 27);
 		testaAda.setFill(Color.BLUE);
@@ -366,6 +370,7 @@ public class GiocoInterattivo {
 			rettangoloAda.setVisible(false);
 			areaGioco.getChildren().add(rettangoloAda);
 			areaGioco.getChildren().add(adaImageView);
+			areaGioco.getChildren().add(pergamena.getView());
 			areaGioco.getChildren().remove(gruppo);
 			chest1.setY(250);
 			chest2.setY(100);
@@ -398,6 +403,7 @@ public class GiocoInterattivo {
 				// controlliamo lo stato della risposta
 				if (statoDomanda==1) {
 					nDomanda++;
+					pergamena.setPergameneTrovate(pergamena.getPergameneTrovate()+1);
 					System.out.println(nDomanda);
 					domanda = null;
 					areaGioco.getChildren().clear();
@@ -421,6 +427,7 @@ public class GiocoInterattivo {
 					chest2.setY(-200);
 					chest1.setY(-200);
 					domanda=null;
+					pergamena.setPergameneTrovate(0);
 					gameover = new GameOver(areaGioco, testoDialogo, gruppo);
 				}
 			}
@@ -456,6 +463,8 @@ public class GiocoInterattivo {
 	}
 	
 	public void scenaTre(RaccoltaTesti testoDialogo, Group gruppo) {
+		areaGioco.getChildren().remove(pergamena.getView());
+		areaGioco.getChildren().add(pergamena.getView());
 		int nOggettiCollisione = Utilita.collisioniRettangoliScenaTre(mDiRettangoli[1], rettangoloAda);
 		if (nOggettiCollisione > 1) {
 			System.out.println("piu di una");
@@ -486,6 +495,7 @@ public class GiocoInterattivo {
 					nDomanda++;
 					domanda = null;
 					areaGioco.getChildren().clear();
+					pergamena.setPergameneTrovate(pergamena.getPergameneTrovate()+1);
 	    			System.out.println("ritorno a gioco");
 //	    			System.out.println(schermataGioco.getChildren());
 					int dimensionePane=schermataGioco.getChildren().size();
@@ -497,6 +507,8 @@ public class GiocoInterattivo {
 					domanda = null;
 					rettangoloPorta.setY(-500);
 					gameover = new GameOver(areaGioco, testoDialogo, gruppo);
+					pergamena.setPergameneTrovate(2);
+
 					areaGioco.getChildren().remove(rettangoloPorta);
 
 				}
@@ -578,6 +590,7 @@ public class GiocoInterattivo {
 		rettangolo.setX(550);
 		rettangolo.setVisible(false);
 		areaGioco.getChildren().add(rettangoloAda);
+		areaGioco.getChildren().add(pergamena.getView());
 		// adaImageView.toFront();
 	}
 

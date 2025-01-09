@@ -13,6 +13,7 @@ import javafx.scene.Group;
 public class GameOver {
 	RaccoltaTesti testi;
 	Group group;
+	int pergamene;
 	Pane areaGioco;
     public GameOver(Pane areaGioco, RaccoltaTesti testoDialogo, Group gruppo) {
         // Imposta lo sfondo nero dell'AreaGioco
