@@ -246,7 +246,7 @@ public class GiocoInterattivo {
 	Rectangle testaAda = new Rectangle(25, 30);
 	Rectangle lava = new Rectangle(250, 60);
 
-	Rectangle chest1 = Utilita.rettangolo(200, 260, 100, 110);
+	Rectangle chest1 = Utilita.rettangolo(200, 260, 100, 130);
 	Rectangle chest2 = Utilita.rettangolo(460, 100, 100, 120);
 	Rectangle rettangoloPorta = Utilita.rettangolo(730, 150, 120, 270);
 

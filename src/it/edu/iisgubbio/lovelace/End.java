@@ -45,7 +45,7 @@ public class End {
         title.setId("titoloEnd");
         title.setTextFill(Color.WHITE);
         title.setAlignment(Pos.CENTER);
-        title.setPrefWidth(450);
+        title.setPrefWidth(700);
         Rectangle sfondo= new Rectangle(Menu.LARGHEZZA_AREA_GIOCO,Menu.ALTEZZA_AREA_GIOCO);
         sfondo.setFill(Color.rgb(0, 0, 0, 0.5));
         Button exitButton = new Button(testoDialogo.getString("esci"));
@@ -65,7 +65,7 @@ public class End {
         exitButton.setOnAction(e -> {Platform.exit();}); // Collega il pulsante al metodo
         layout.getChildren().addAll(title, exitButton, menuButton);
         layout.setAlignment(Pos.CENTER);
-        layout.setMaxWidth(450);
+        layout.setMaxWidth(700);
         layout.setLayoutX(Menu.LARGHEZZA_AREA_GIOCO/2-layout.getMaxWidth()/2);
         layout.setMaxHeight(200);
         layout.setLayoutY(Menu.ALTEZZA_AREA_GIOCO/2-layout.getMaxHeight()/2);
