@@ -38,6 +38,11 @@
     -fx-font-weight: bold;        
     -fx-alignment: center;
 }
+#pergamena{
+	-fx-text-fill: white;
+	-fx-font-family: Minecraft;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 15, 0.5, 0, 0);
+}
 
 #bottonedomanda:hover {
     -fx-background-color: rgb(125,125,125); 
@@ -96,7 +101,14 @@
 #titoloEnd {
 	-fx-text-fill: yellow;
 	-fx-font-family: Minecraft;
-	-fx-font-size: 30
+	-fx-font-size: 45;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 15, 0.5, 0, 0);
+}
+#titoloGameOver {
+	-fx-text-fill: red;
+	-fx-font-family: Minecraft;
+	-fx-font-size: 45;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 15, 0.5, 0, 0);
 }
 
 #slider{
