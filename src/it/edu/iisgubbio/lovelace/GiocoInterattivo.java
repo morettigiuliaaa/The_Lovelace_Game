@@ -277,8 +277,7 @@ public class GiocoInterattivo {
 	};
 
 	public void scenaDue(RaccoltaTesti testoDialogo, Group gruppo) {
-		areaGioco.getChildren().remove(pergamena.getView());
-		areaGioco.getChildren().add(pergamena.getView());
+		
 		testaAda.setX(rettangoloAda.getX() - 10);
 		testaAda.setY(rettangoloAda.getY() - adaFerma.getFitHeight() + 27);
 		testaAda.setFill(Color.BLUE);
@@ -305,7 +304,10 @@ public class GiocoInterattivo {
 		}
 		if (Utilita.collisioniLava(lava, testaAda)) {
 			domanda = null;
+			pergamena.setPergameneTrovate(0);
 			gameover = new GameOver(areaGioco, testoDialogo, gruppo);
+			areaGioco.getChildren().remove(pergamena.getView());
+			areaGioco.getChildren().add(pergamena.getView());
 		}
 		if (Utilita.collisioniPorta(rettangoloPorta, rettangoloAda)) {
 			if(nDomanda>2) {
@@ -343,6 +345,8 @@ public class GiocoInterattivo {
 			(new FadeOut(gruppo, 1000)).start();
 			areaGioco.getChildren().addAll(mDiRettangoli[0]);
 			areaGioco.getChildren().addAll(testaAda, lava, chest1, chest2, rettangoloPorta);
+			areaGioco.getChildren().remove(pergamena.getView());
+			areaGioco.getChildren().add(pergamena.getView());
 			areaGioco.setId("gioco2");
 			adaImageView.setFitWidth(150);
 			adaImageView.setFitHeight(150);
@@ -370,7 +374,6 @@ public class GiocoInterattivo {
 			rettangoloAda.setVisible(false);
 			areaGioco.getChildren().add(rettangoloAda);
 			areaGioco.getChildren().add(adaImageView);
-			areaGioco.getChildren().add(pergamena.getView());
 			areaGioco.getChildren().remove(gruppo);
 			chest1.setY(250);
 			chest2.setY(100);
@@ -404,9 +407,12 @@ public class GiocoInterattivo {
 				if (statoDomanda==1) {
 					nDomanda++;
 					pergamena.setPergameneTrovate(pergamena.getPergameneTrovate()+1);
+					
 					System.out.println(nDomanda);
 					domanda = null;
 					areaGioco.getChildren().clear();
+					areaGioco.getChildren().remove(pergamena.getView());
+					areaGioco.getChildren().add(pergamena.getView());
 	    			System.out.println("ritorno a gioco");
 //	    			System.out.println(schermataGioco.getChildren());
 					if (nCollisioneChest== 1) {
@@ -429,6 +435,8 @@ public class GiocoInterattivo {
 					domanda=null;
 					pergamena.setPergameneTrovate(0);
 					gameover = new GameOver(areaGioco, testoDialogo, gruppo);
+					areaGioco.getChildren().remove(pergamena.getView());
+					areaGioco.getChildren().add(pergamena.getView());
 				}
 			}
 		}
@@ -463,8 +471,7 @@ public class GiocoInterattivo {
 	}
 	
 	public void scenaTre(RaccoltaTesti testoDialogo, Group gruppo) {
-		areaGioco.getChildren().remove(pergamena.getView());
-		areaGioco.getChildren().add(pergamena.getView());
+		
 		int nOggettiCollisione = Utilita.collisioniRettangoliScenaTre(mDiRettangoli[1], rettangoloAda);
 		if (nOggettiCollisione > 1) {
 			System.out.println("piu di una");
@@ -479,6 +486,10 @@ public class GiocoInterattivo {
 		if (Utilita.collisioniLava(lava, testaAda)) {
 			domanda = null;
 			gameover = new GameOver(areaGioco, testoDialogo, gruppo);
+			pergamena.setPergameneTrovate(2);
+
+			areaGioco.getChildren().remove(pergamena.getView());
+			areaGioco.getChildren().add(pergamena.getView());
 		}
 		if (Utilita.collisioniPorta(rettangoloPorta, rettangoloAda)) {
 			if (domanda == null) {
@@ -496,6 +507,8 @@ public class GiocoInterattivo {
 					domanda = null;
 					areaGioco.getChildren().clear();
 					pergamena.setPergameneTrovate(pergamena.getPergameneTrovate()+1);
+					areaGioco.getChildren().remove(pergamena.getView());
+					areaGioco.getChildren().add(pergamena.getView());
 	    			System.out.println("ritorno a gioco");
 //	    			System.out.println(schermataGioco.getChildren());
 					int dimensionePane=schermataGioco.getChildren().size();
@@ -508,7 +521,8 @@ public class GiocoInterattivo {
 					rettangoloPorta.setY(-500);
 					gameover = new GameOver(areaGioco, testoDialogo, gruppo);
 					pergamena.setPergameneTrovate(2);
-
+					areaGioco.getChildren().remove(pergamena.getView());
+					areaGioco.getChildren().add(pergamena.getView());
 					areaGioco.getChildren().remove(rettangoloPorta);
 
 				}
@@ -522,6 +536,7 @@ public class GiocoInterattivo {
 			domanda = null;
 //			System.out.println("sono nellif");
 			areaGioco.getChildren().clear();
+			areaGioco.getChildren().add(pergamena.getView());
 			areaGioco.getChildren().add(gruppo);
 			(new FadeOut(gruppo, 1000)).start();
 			areaGioco.setId("gioco3");
@@ -590,7 +605,6 @@ public class GiocoInterattivo {
 		rettangolo.setX(550);
 		rettangolo.setVisible(false);
 		areaGioco.getChildren().add(rettangoloAda);
-		areaGioco.getChildren().add(pergamena.getView());
 		// adaImageView.toFront();
 	}
 

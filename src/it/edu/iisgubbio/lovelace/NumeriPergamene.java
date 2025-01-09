@@ -34,8 +34,9 @@ public class NumeriPergamene {
 //		}
 		return new Image(NumeriPergamene.class.getResource("pergamenaDefinita.png").toExternalForm());
 	}
+	Group gruppo = new Group();
 	public Group getView() {
-		Group gruppo = new Group();
+		gruppo.getChildren().clear();
 		Label nPergamene= new Label(nPergameneTrovate+"/3");
 		nPergamene.setId("pergamene");
 		nPergamene.setLayoutX(100);

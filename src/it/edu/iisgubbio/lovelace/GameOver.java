@@ -29,7 +29,6 @@ public class GameOver {
 
         // Pulsante "Ritenta"
         Button retryButton = new Button(testoDialogo.getString("ritenta"));
-        retryButton.setFont(Font.font("Arial", 20));
         retryButton.setOnAction(e -> metodoDelPulsante()); // Collega il pulsante al metodo
 
         // Layout verticale

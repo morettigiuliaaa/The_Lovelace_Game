@@ -55,7 +55,8 @@
 }
 .button {
     -fx-background-color: rgb(132, 16, 153);
-    -fx-text-fill: white;          
+    -fx-text-fill: white;  
+	-fx-font-size: 17px;         
     -fx-padding: 10px 20px;       
     -fx-border-radius: 10px;      
     -fx-background-radius: 10px; 
