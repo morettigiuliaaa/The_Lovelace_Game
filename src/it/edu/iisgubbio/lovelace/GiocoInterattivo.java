@@ -309,6 +309,7 @@ public class GiocoInterattivo {
 			}else {
 				if(dialogo==null) {
 					adaFerma.setX(40);
+					adaFerma.setY(575-adaFerma.getFitHeight());
 					rettangoloAda.setX(adaFerma.getX() + puntoInizioCorpoAda);
 					double nC=(int)(Math.random()*2);
 					if(nC==1) {
