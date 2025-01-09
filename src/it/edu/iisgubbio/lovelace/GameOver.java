@@ -1,6 +1,7 @@
 package it.edu.iisgubbio.lovelace;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -22,9 +23,8 @@ public class GameOver {
         //areaGioco.setStyle("-fx-background-color: black;");
 
         // Titolo "GameOver"
-        Text title = new Text("Game Over");
-        title.setFont(Font.font("Arial", 50));
-        title.setFill(Color.RED);
+        Label title = new Label("Game Over");
+        title.setId("titoloGameOver");
 
         // Pulsante "Ritenta"
         Button retryButton = new Button(testoDialogo.getString("ritenta"));
